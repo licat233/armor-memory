@@ -1,79 +1,90 @@
 ---
-type: "core"
-memory_layer: "core"
+type: "system"
 status: "active"
-authority: "ssot"
-write_policy: "proposal_required"
+authority: "canonical"
 created: "2026-07-27"
 updated: "2026-07-27"
-tags:
-  - "routing"
-  - "deterministic"
-author_agent: "Codex"
-confidence: "high"
 ---
 
 # Routing Rules
 
-## Rule 1: Work Product
+The router is a deterministic path mapper. It does not read natural language and it does not guess intent from keywords.
 
-When the task is to create, write, draft, edit, improve, design, prepare, or generate a deliverable:
+## Interface
 
-`-> 02-Projects/`
+Use structured arguments only:
 
-If there is an active named project:
-
-`-> 02-Projects/Active/<project>/`
-
-If there is no named project:
-
-`-> 02-Projects/Workspaces/<domain>/`
-
-## Rule 2: Record
-
-When the task is to save, record, preserve, archive, or document something that already happened or was received:
-
-`-> 03-Records/`
-
-## Rule 3: Knowledge
-
-When the task explicitly asks to remember, organize, summarize into reusable knowledge, define a long-term rule, or maintain a knowledge page:
-
-`-> 01-Knowledge/`
-
-## Rule 4: Research
-
-When the task is to investigate, research, compare external information, gather sources, or analyze an external topic:
-
-`-> 04-Research/`
-
-External source copies:
-
-`-> 04-Research/Sources/`
-
-Research notes and conclusions:
-
-`-> 04-Research/Notes/`
-
-## Rule 5: Inbox
-
-Use `90-Inbox/` only when the task purpose cannot be determined.
-
-Required metadata:
-
-```yaml
-routing_status: "unresolved"
-routing_reason: "<specific reason>"
+```bash
+python3 scripts/armor-route.py \
+  --object work-product \
+  --domain website \
+  --artifact article \
+  --project armor-website
 ```
 
-Do not use Inbox merely because something is unverified.
+## Closed Enums
 
-## Priority Order
+- `object`: `work-product`, `record`, `knowledge`, `research`, `unresolved`
+- `domain`: `website`, `content`, `marketing`, `products`, `operations`
+- `artifact`: `article`, `landing-page`, `case-study`, `blog-post`, `report`, `campaign`, `email-sequence`, `social-copy`, `product-manual`, `spec-sheet`, `price-list`, `process-doc`, `checklist`, `internal-report`
+- `record-type`: `meeting`, `email`, `conversation`, `journal`, `feedback`, `published`
+- `knowledge-type`: `company`, `brand`, `product`, `customer`, `rule`, `insight`
+- `research-kind`: `source`, `note`
 
-1. Explicit active project
-2. Explicit persistent workspace
-3. Record of an event or received content
-4. Explicit long-term knowledge request
-5. External research request
-6. Inbox only if classification is unresolved
+Unknown values fail immediately through `argparse choices=`.
 
+## Deterministic Rules
+
+### Work Product
+
+- `work-product + website + article + project`
+  `-> 02-Projects/Active/<project>/Content/Articles/`
+- `work-product + website + article`
+  `-> 02-Projects/Workspaces/Website/Articles/`
+- `work-product + products + product-manual + entity`
+  `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
+
+### Record
+
+- `record + journal + year`
+  `-> 03-Records/Journal/<year>/`
+- `record + meeting`
+  `-> 03-Records/Meetings/`
+
+### Knowledge
+
+- `knowledge + product`
+  `-> 01-Knowledge/Products/`
+
+### Research
+
+- `research + source`
+  `-> 04-Research/Sources/`
+- `research + note`
+  `-> 04-Research/Notes/`
+
+### Unresolved
+
+- `unresolved`
+  `-> 90-Inbox/`
+
+## Argument Failures
+
+- Missing required arguments must fail.
+- Invalid enum values must fail.
+- Unsupported domain and artifact combinations must fail.
+- `90-Inbox/` is valid only when `--object unresolved` is explicitly provided.
+
+## Name Safety
+
+Project and entity names use deterministic slug normalization:
+
+```yaml
+NFKC normalize
+trim whitespace
+lowercase
+replace spaces and underscores with hyphens
+collapse repeated hyphens
+```
+
+Rejected names include absolute paths, path traversal, slash separators, and shell metacharacters.

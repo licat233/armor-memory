@@ -1,16 +1,9 @@
 ---
-type: "core"
-memory_layer: "core"
+type: "system"
 status: "active"
-authority: "ssot"
-write_policy: "proposal_required"
+authority: "canonical"
 created: "2026-07-27"
 updated: "2026-07-27"
-tags:
-  - "armor-minimal-stable"
-  - "entrypoint"
-author_agent: "Codex"
-confidence: "high"
 ---
 
 # START HERE
@@ -23,8 +16,8 @@ Read in this order:
 2. `AUTHORITY-RULES.md`
 3. `DIRECTORY-GUIDE.md`
 4. `ROUTING-TESTS.md`
+5. `../ARCHITECTURE.md`
 
 Core principle:
 
 > Directory location represents the document's primary operational purpose, not its truth status or lifecycle status.
-

@@ -1,21 +1,16 @@
 ---
-type: "core"
-memory_layer: "core"
+type: "system"
 status: "active"
 authority: "reference"
-write_policy: "open"
 created: "2026-07-27"
 updated: "2026-07-27"
-tags:
-  - "directory-guide"
-author_agent: "Codex"
-confidence: "high"
 ---
 
 # Directory Guide
 
 ```text
 minimal-stable/
+├── ARCHITECTURE.md
 ├── 00-System/
 ├── 01-Knowledge/
 ├── 02-Projects/
@@ -55,4 +50,3 @@ Recommended substructure:
 ├── Sources/
 └── Notes/
 ```
-
