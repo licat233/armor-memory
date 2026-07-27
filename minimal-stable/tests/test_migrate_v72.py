@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import importlib.util
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -21,10 +22,6 @@ SPEC.loader.exec_module(MODULE)
 def write_text(path: Path, text: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
-
-
-def run_cli(*args: str) -> int:
-    return MODULE.main.__wrapped__(*args)  # type: ignore[attr-defined]
 
 
 def invoke(args: list[str]) -> int:
@@ -50,6 +47,90 @@ def test_dry_run_performs_no_writes(tmp_path: Path):
     assert invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"]) == 0
     assert not target.exists()
     assert (report / "inventory.json").exists()
+
+
+def test_report_directory_equals_source_rejected(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    source.mkdir()
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(source), "--dry-run"])
+
+
+def test_report_directory_inside_source_rejected(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = source / "reports"
+    source.mkdir()
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+
+
+def test_source_inside_report_directory_rejected(tmp_path: Path):
+    report = tmp_path / "report-root"
+    source = report / "source"
+    target = tmp_path / "target"
+    source.mkdir(parents=True)
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+
+
+def test_report_directory_equals_target_rejected(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    source.mkdir()
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(target), "--dry-run"])
+
+
+def test_report_directory_inside_target_rejected(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = target / "reports"
+    source.mkdir()
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+
+
+def test_target_inside_report_directory_rejected(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report-root"
+    target = report / "target"
+    source.mkdir()
+    with pytest.raises(SystemExit):
+        invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+
+
+def test_valid_external_report_directory_allowed(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = tmp_path / "external-report"
+    write_text(source / "01-Facts" / "Products" / "fact.md", "hello")
+
+    assert invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"]) == 0
+    assert (report / "inventory.json").exists()
+
+
+def test_dry_run_does_not_modify_source(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = tmp_path / "report"
+    write_text(source / "01-Facts" / "Products" / "fact.md", "hello")
+
+    before = sorted(path.relative_to(source).as_posix() for path in source.rglob("*"))
+    invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+    after = sorted(path.relative_to(source).as_posix() for path in source.rglob("*"))
+    assert before == after
+
+
+def test_dry_run_does_not_modify_target(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = tmp_path / "report"
+    write_text(source / "01-Facts" / "Products" / "fact.md", "hello")
+
+    invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
+    assert not target.exists()
 
 
 def test_known_folder_mapping(tmp_path: Path):
@@ -138,8 +219,8 @@ def test_symlink_handling(tmp_path: Path):
     target = tmp_path / "target"
     report = tmp_path / "report"
     write_text(source / "01-Facts" / "Products" / "real.md", "hello")
-    os_target = source / "01-Facts" / "Products" / "real.md"
-    (source / "01-Facts" / "Products" / "link.md").symlink_to(os_target)
+    real_target = source / "01-Facts" / "Products" / "real.md"
+    (source / "01-Facts" / "Products" / "link.md").symlink_to(real_target)
 
     invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
     ignored = read_csv_rows(report / "ignored.csv")
@@ -208,4 +289,3 @@ def test_inventory_json_contains_stats(tmp_path: Path):
     invoke(["--source", str(source), "--target", str(target), "--report-dir", str(report), "--dry-run"])
     payload = json.loads((report / "inventory.json").read_text(encoding="utf-8"))
     assert payload["stats"]["proposed"] == 1
-

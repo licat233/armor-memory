@@ -89,7 +89,7 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def ensure_safe_paths(source: Path, target: Path) -> None:
+def ensure_safe_paths(source: Path, target: Path, report_dir: Path) -> None:
     if not source.exists():
         raise ValueError(f"source path does not exist: {source}")
     if not source.is_dir():
@@ -97,6 +97,7 @@ def ensure_safe_paths(source: Path, target: Path) -> None:
 
     source_real = source.resolve()
     target_real = target.resolve(strict=False)
+    report_real = report_dir.resolve(strict=False)
 
     if source_real == target_real:
         raise ValueError("source and target must be different directories")
@@ -104,6 +105,18 @@ def ensure_safe_paths(source: Path, target: Path) -> None:
         raise ValueError("target must not be inside source")
     if is_relative_to(source_real, target_real):
         raise ValueError("source must not be inside target")
+    if report_real == source_real:
+        raise ValueError("report directory must not be the source vault")
+    if is_relative_to(report_real, source_real):
+        raise ValueError("report directory must not be inside the source vault")
+    if is_relative_to(source_real, report_real):
+        raise ValueError("source vault must not be inside the report directory")
+    if report_real == target_real:
+        raise ValueError("report directory must not be the target vault")
+    if is_relative_to(report_real, target_real):
+        raise ValueError("report directory must not be inside the target vault")
+    if is_relative_to(target_real, report_real):
+        raise ValueError("target vault must not be inside the report directory")
 
 
 def is_relative_to(path: Path, base: Path) -> bool:
@@ -429,7 +442,7 @@ def main() -> int:
     report_dir = Path(args.report_dir).expanduser()
 
     try:
-        ensure_safe_paths(source, target)
+        ensure_safe_paths(source, target, report_dir)
     except ValueError as exc:
         parser.error(str(exc))
 

@@ -43,7 +43,11 @@ The scripts do not hard-code this path. Always pass explicit `--source`, `--targ
 
 ## Dry Run First
 
-Dry-run is the default safe starting point and does not write to either Vault.
+Dry-run is the mandatory first step.
+
+`--report-dir` must be outside both the source Vault and the target Vault.
+
+Dry-run does not write to either Vault.
 
 ```bash
 python3 minimal-stable/scripts/migrate-v72.py \
@@ -146,4 +150,3 @@ shasum -a 256 armor-v7.2-backup-YYYY-MM-DD.tar.gz
 ```
 
 Do not delete the source as part of this workflow.
-
