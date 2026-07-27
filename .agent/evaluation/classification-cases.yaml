@@ -1,0 +1,694 @@
+- id: website_article_active_project
+  prompt: "帮我为 ARMOR 官网重构项目写一篇磁吸货架灯文章"
+  context:
+    active_project: "armor-website"
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: website_article_workspace
+  prompt: "写一篇 ARMOR 官网的货架灯文章"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: landing_page_copy
+  prompt: "帮我写一个新品落地页文案"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "landing-page"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: website_case_study
+  prompt: "整理一个零售照明项目官网案例"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "case-study"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: blog_post
+  prompt: "写一篇关于 ESL 灯光集成的博客文章"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "content"
+    artifact: "blog-post"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: content_report
+  prompt: "做一份本月内容表现报告"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "content"
+    artifact: "report"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: marketing_campaign
+  prompt: "策划一个秋季促销 campaign"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "campaign"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: email_sequence
+  prompt: "写一套开发信邮件序列"
+  context:
+    active_project: "lead-nurture-q4"
+  expected:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "email-sequence"
+    project: "lead-nurture-q4"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: social_copy
+  prompt: "写三条 LinkedIn 社媒文案"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "social-copy"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: product_manual
+  prompt: "给磁吸货架灯做一份安装手册"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: null
+    entity: "magnetic-shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: product_spec_sheet
+  prompt: "帮我整理线性灯条的规格表"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "spec-sheet"
+    project: null
+    entity: "linear-light-bar"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: product_price_list
+  prompt: "做一个货架灯产品价格表"
+  context:
+    active_project: "pricing-2026"
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "price-list"
+    project: "pricing-2026"
+    entity: "shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: process_document
+  prompt: "整理一个展会样品出货流程文档"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "operations"
+    artifact: "process-doc"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: checklist
+  prompt: "做一份客户拜访前检查清单"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "operations"
+    artifact: "checklist"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: internal_report
+  prompt: "写一份仓库盘点内部报告"
+  context:
+    active_project: "warehouse-audit"
+  expected:
+    object: "work-product"
+    domain: "operations"
+    artifact: "internal-report"
+    project: "warehouse-audit"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: meeting_record
+  prompt: "保存今天的产品评审会议记录"
+  context:
+    active_project: "new-shelf-light"
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "meeting"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: email_record
+  prompt: "归档客户发来的询盘邮件"
+  context:
+    active_project: null
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "email"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: conversation_record
+  prompt: "把这段微信沟通保存成对话记录"
+  context:
+    active_project: null
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "conversation"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: journal_record
+  prompt: "记录今天的工作日志"
+  context:
+    active_project: null
+    year: "2026"
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "journal"
+    knowledge_type: null
+    research_kind: null
+    year: "2026"
+- id: feedback_record
+  prompt: "保存客户对磁吸灯安装方式的反馈"
+  context:
+    active_project: null
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "feedback"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: published_snapshot
+  prompt: "保存这个已经发布页面的快照"
+  context:
+    active_project: null
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "published"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: company_knowledge
+  prompt: "把 ARMOR 的目标市场描述更新成长期公司知识"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "company"
+    research_kind: null
+    year: null
+- id: brand_knowledge
+  prompt: "更新 ARMOR 的品牌定位知识页"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "brand"
+    research_kind: null
+    year: null
+- id: product_knowledge
+  prompt: "把这个产品兼容性说明保存成长期产品知识"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "product"
+    research_kind: null
+    year: null
+- id: customer_knowledge
+  prompt: "把这个客户采购偏好记成客户知识"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "customer"
+    research_kind: null
+    year: null
+- id: reusable_rule
+  prompt: "把这个英文写作规范保存成复用规则"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "rule"
+    research_kind: null
+    year: null
+- id: reusable_insight
+  prompt: "把这次展会复盘中的关键经验保存成可复用 insight"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "insight"
+    research_kind: null
+    year: null
+- id: research_source
+  prompt: "保存这个竞争对手官网页面作为研究来源"
+  context:
+    active_project: null
+  expected:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "source"
+    year: null
+- id: research_note
+  prompt: "整理一份竞争对手研究笔记"
+  context:
+    active_project: null
+  expected:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "note"
+    year: null
+- id: explicit_unresolved
+  prompt: "先收下这段材料，我还不能判断应该放哪里"
+  context:
+    active_project: null
+  expected:
+    object: "unresolved"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: meeting_to_proposal_distinction
+  prompt: "根据今天的客户会议内容写一份合作提案"
+  context:
+    active_project: "client-proposal"
+  expected:
+    object: "work-product"
+    domain: "content"
+    artifact: "report"
+    project: "client-proposal"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: research_to_article_distinction
+  prompt: "基于这份竞争对手调研写一篇官网文章"
+  context:
+    active_project: "armor-website"
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: product_fact_vs_manual
+  prompt: "把这个产品安装限制保存成长期产品知识"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "product"
+    research_kind: null
+    year: null
+- id: draft_article_not_inbox
+  prompt: "帮我起草一篇官网文章初稿"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: unverified_research_not_inbox
+  prompt: "整理一份还没核实的竞争对手研究笔记"
+  context:
+    active_project: null
+  expected:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "note"
+    year: null
+- id: active_project_priority_article
+  prompt: "在官网重构项目里写一篇新品文章"
+  context:
+    active_project: "armor-website"
+  expected:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: active_project_priority_campaign
+  prompt: "在新品发布项目里准备 campaign 文案"
+  context:
+    active_project: "launch-2026"
+  expected:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "campaign"
+    project: "launch-2026"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: missing_entity_case
+  prompt: "给这个产品做一份说明书，但没有给出具体产品名"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: unsupported_vocabulary_case
+  prompt: "把这个内容放进一个新的 playbook 类型目录"
+  context:
+    active_project: null
+  expected:
+    router_gap: true
+    required_message: "Router vocabulary gap"
+- id: customer_email_with_project_context
+  prompt: "保存 launch 项目里客户发来的确认邮件"
+  context:
+    active_project: "launch-2026"
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "email"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: product_manual_with_project
+  prompt: "在手册更新项目中给货架灯写安装手册"
+  context:
+    active_project: "manual-refresh"
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: "manual-refresh"
+    entity: "shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: spec_sheet_with_unicode_entity
+  prompt: "整理货架灯条的规格表"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "spec-sheet"
+    project: null
+    entity: "货架-灯条"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: price_list_without_project
+  prompt: "做一个新品价格表"
+  context:
+    active_project: null
+  expected:
+    object: "work-product"
+    domain: "products"
+    artifact: "price-list"
+    project: null
+    entity: "new-product"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: checklist_with_active_project
+  prompt: "在仓库审计项目里做一份盘点检查清单"
+  context:
+    active_project: "warehouse-audit"
+  expected:
+    object: "work-product"
+    domain: "operations"
+    artifact: "checklist"
+    project: "warehouse-audit"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: published_snapshot_not_knowledge
+  prompt: "把这个已经上线的页面保存成发布快照"
+  context:
+    active_project: null
+  expected:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "published"
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: insight_not_article
+  prompt: "把这次展会的教训保存成长期 insight"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "insight"
+    research_kind: null
+    year: null
+- id: research_source_not_article
+  prompt: "先把这个竞品页面保存为研究来源，不要写文章"
+  context:
+    active_project: "armor-website"
+  expected:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "source"
+    year: null
+- id: company_rule_distinction
+  prompt: "把这个品牌写作规范保存成长期规则"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "rule"
+    research_kind: null
+    year: null
+- id: unresolved_after_context_check
+  prompt: "这段内容我现在无法判断属于记录、知识还是研究，先作为 unresolved 处理"
+  context:
+    active_project: null
+  expected:
+    object: "unresolved"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+- id: customer_knowledge_not_email
+  prompt: "把这个客户对包装偏好的长期信息保存成客户知识"
+  context:
+    active_project: null
+  expected:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "customer"
+    research_kind: null
+    year: null

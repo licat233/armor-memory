@@ -1,0 +1,494 @@
+cases:
+  website_article_active_project:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  website_article_workspace:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  landing_page_copy:
+    object: "work-product"
+    domain: "website"
+    artifact: "landing-page"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  website_case_study:
+    object: "work-product"
+    domain: "website"
+    artifact: "case-study"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  blog_post:
+    object: "work-product"
+    domain: "content"
+    artifact: "blog-post"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  content_report:
+    object: "work-product"
+    domain: "content"
+    artifact: "report"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  marketing_campaign:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "campaign"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  email_sequence:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "email-sequence"
+    project: "lead-nurture-q4"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  social_copy:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "social-copy"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  product_manual:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: null
+    entity: "magnetic-shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  product_spec_sheet:
+    object: "work-product"
+    domain: "products"
+    artifact: "spec-sheet"
+    project: null
+    entity: "linear-light-bar"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  product_price_list:
+    object: "work-product"
+    domain: "products"
+    artifact: "price-list"
+    project: "pricing-2026"
+    entity: "shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  process_document:
+    object: "work-product"
+    domain: "operations"
+    artifact: "process-doc"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  checklist:
+    object: "work-product"
+    domain: "operations"
+    artifact: "checklist"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  internal_report:
+    object: "work-product"
+    domain: "operations"
+    artifact: "internal-report"
+    project: "warehouse-audit"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  meeting_record:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "meeting"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  email_record:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "email"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  conversation_record:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "conversation"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  journal_record:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "journal"
+    knowledge_type: null
+    research_kind: null
+    year: "2026"
+  feedback_record:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "feedback"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  published_snapshot:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "published"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  company_knowledge:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "company"
+    research_kind: null
+    year: null
+  brand_knowledge:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "brand"
+    research_kind: null
+    year: null
+  product_knowledge:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "product"
+    research_kind: null
+    year: null
+  customer_knowledge:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "customer"
+    research_kind: null
+    year: null
+  reusable_rule:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "rule"
+    research_kind: null
+    year: null
+  reusable_insight:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "insight"
+    research_kind: null
+    year: null
+  research_source:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "source"
+    year: null
+  research_note:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "note"
+    year: null
+  explicit_unresolved:
+    object: "unresolved"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  meeting_to_proposal_distinction:
+    object: "work-product"
+    domain: "content"
+    artifact: "report"
+    project: "client-proposal"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  research_to_article_distinction:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  product_fact_vs_manual:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "product"
+    research_kind: null
+    year: null
+  draft_article_not_inbox:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  unverified_research_not_inbox:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "note"
+    year: null
+  active_project_priority_article:
+    object: "work-product"
+    domain: "website"
+    artifact: "article"
+    project: "armor-website"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  active_project_priority_campaign:
+    object: "work-product"
+    domain: "marketing"
+    artifact: "campaign"
+    project: "launch-2026"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  missing_entity_case:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  unsupported_vocabulary_case:
+    router_gap: true
+    required_message: "Router vocabulary gap"
+  customer_email_with_project_context:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "email"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  product_manual_with_project:
+    object: "work-product"
+    domain: "products"
+    artifact: "product-manual"
+    project: "manual-refresh"
+    entity: "shelf-light"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  spec_sheet_with_unicode_entity:
+    object: "work-product"
+    domain: "products"
+    artifact: "spec-sheet"
+    project: null
+    entity: "货架-灯条"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  price_list_without_project:
+    object: "work-product"
+    domain: "products"
+    artifact: "price-list"
+    project: null
+    entity: "new-product"
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  checklist_with_active_project:
+    object: "work-product"
+    domain: "operations"
+    artifact: "checklist"
+    project: "warehouse-audit"
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  published_snapshot_not_knowledge:
+    object: "record"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: "published"
+    knowledge_type: null
+    research_kind: null
+    year: null
+  insight_not_article:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "insight"
+    research_kind: null
+    year: null
+  research_source_not_article:
+    object: "research"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: "source"
+    year: null
+  company_rule_distinction:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "rule"
+    research_kind: null
+    year: null
+  unresolved_after_context_check:
+    object: "unresolved"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: null
+    research_kind: null
+    year: null
+  customer_knowledge_not_email:
+    object: "knowledge"
+    domain: null
+    artifact: null
+    project: null
+    entity: null
+    record_type: null
+    knowledge_type: "customer"
+    research_kind: null
+    year: null
