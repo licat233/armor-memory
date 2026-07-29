@@ -164,6 +164,10 @@ def extract_legacy_links(path: Path) -> list[str]:
     return sorted(set(found))
 
 
+def has_hidden_path_component(path: Path) -> bool:
+    return any(part.startswith(".") for part in path.parts)
+
+
 def determine_route(source_rel: Path) -> tuple[str, str, Path | None]:
     top = source_rel.parts[0]
 
@@ -207,7 +211,7 @@ def build_inventory(source: Path) -> tuple[list[FileRecord], dict[str, int]]:
     for path in iter_source_files(source):
         rel = path.relative_to(source)
 
-        if any(part.startswith(".") for part in rel.parts):
+        if has_hidden_path_component(rel):
             records.append(
                 FileRecord(
                     source_rel=rel.as_posix(),
@@ -386,6 +390,10 @@ def apply_copy(
 
         source_path = source / record.source_rel
         target_path = target / record.target_rel
+
+        if has_hidden_path_component(Path(record.source_rel)) or has_hidden_path_component(Path(record.target_rel)):
+            raise RuntimeError(f"hidden path components are not allowed in manifest-driven copy: {record.source_rel}")
+
         target_path.parent.mkdir(parents=True, exist_ok=True)
 
         existing_resume = resume_manifest.get(record.source_rel)

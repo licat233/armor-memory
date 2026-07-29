@@ -238,6 +238,78 @@ def test_hidden_files_are_ignored(tmp_path: Path):
     assert ignored[0]["source_rel"] == ".hidden.md"
 
 
+def test_root_ds_store_is_ignored(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report"
+    write_text(source / ".DS_Store", "finder")
+
+    invoke(["--source", str(source), "--target", str(tmp_path / "target"), "--report-dir", str(report), "--dry-run"])
+    ignored = read_csv_rows(report / "ignored.csv")
+    assert ignored[0]["source_rel"] == ".DS_Store"
+
+
+def test_nested_ds_store_is_ignored(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report"
+    write_text(source / "06-Records" / "Articles" / ".DS_Store", "finder")
+
+    invoke(["--source", str(source), "--target", str(tmp_path / "target"), "--report-dir", str(report), "--dry-run"])
+    ignored = read_csv_rows(report / "ignored.csv")
+    assert ignored[0]["source_rel"] == "06-Records/Articles/.DS_Store"
+
+
+def test_appledouble_is_ignored(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report"
+    write_text(source / "06-Records" / "Articles" / "._image.jpg", "appledouble")
+
+    invoke(["--source", str(source), "--target", str(tmp_path / "target"), "--report-dir", str(report), "--dry-run"])
+    ignored = read_csv_rows(report / "ignored.csv")
+    assert ignored[0]["source_rel"] == "06-Records/Articles/._image.jpg"
+
+
+def test_nested_hidden_directory_is_ignored(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report"
+    write_text(source / "06-Records" / ".trash" / "ghost.md", "hidden")
+
+    invoke(["--source", str(source), "--target", str(tmp_path / "target"), "--report-dir", str(report), "--dry-run"])
+    ignored = read_csv_rows(report / "ignored.csv")
+    assert ignored[0]["source_rel"] == "06-Records/.trash/ghost.md"
+
+
+def test_valid_non_hidden_files_are_proposed(tmp_path: Path):
+    source = tmp_path / "source"
+    report = tmp_path / "report"
+    write_text(source / "06-Records" / "Articles" / "index.md", "article")
+
+    invoke(["--source", str(source), "--target", str(tmp_path / "target"), "--report-dir", str(report), "--dry-run"])
+    proposed = read_csv_rows(report / "proposed-moves.csv")
+    assert proposed[0]["source_rel"] == "06-Records/Articles/index.md"
+
+
+def test_manifest_driven_copy_rejects_hidden_entries(tmp_path: Path):
+    source = tmp_path / "source"
+    target = tmp_path / "target"
+    report = tmp_path / "report"
+    write_text(source / "01-Facts" / "Products" / ".DS_Store", "finder")
+    records = [
+        MODULE.FileRecord(
+            source_rel="01-Facts/Products/.DS_Store",
+            source_abs=str(source / "01-Facts" / "Products" / ".DS_Store"),
+            size=6,
+            sha256=MODULE.sha256_file(source / "01-Facts" / "Products" / ".DS_Store"),
+            status="proposed",
+            reason="forced test record",
+            target_rel="01-Knowledge/Products/.DS_Store",
+        )
+    ]
+    stats = {"proposed": 1, "unresolved": 0, "ignored": 0, "conflicts": 0, "copied": 0, "resumed": 0}
+
+    with pytest.raises(RuntimeError, match="hidden path components are not allowed"):
+        MODULE.apply_copy(source, target, report, records, stats)
+
+
 def test_markdown_link_extraction(tmp_path: Path):
     source = tmp_path / "source"
     target = tmp_path / "target"
