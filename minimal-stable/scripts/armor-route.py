@@ -105,6 +105,9 @@ def slugify_name(value: str) -> str:
 
 
 def build_work_product_path(domain: str, artifact: str, project: str | None, entity: str | None) -> str:
+    if domain == "website" and artifact == "article" and not project:
+        return "03-Records/Published/Articles/"
+
     if domain == "products":
         if artifact == "product-manual":
             if not entity:

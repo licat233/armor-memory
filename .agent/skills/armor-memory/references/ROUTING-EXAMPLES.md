@@ -27,7 +27,7 @@ Command:
 Expected path:
 
 ```text
-02-Projects/Workspaces/Website/Articles/
+03-Records/Published/Articles/
 ```
 
 ## Website article with active project
@@ -452,4 +452,3 @@ Expected path:
 ```text
 90-Inbox/
 ```
-

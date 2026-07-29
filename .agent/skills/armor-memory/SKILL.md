@@ -39,6 +39,8 @@ Do not use it for:
 5. Write or update the document.
 6. Stop.
 
+官网文章仍按 `work-product + website + article` 分类；Router 会直接返回唯一文章目录 `03-Records/Published/Articles/`。
+
 ## Mandatory rules
 
 - Full-Vault search is a fallback, not the first retrieval action.

@@ -73,7 +73,7 @@ Rejected inputs:
 - `work-product + website + article + project`
   `-> 02-Projects/Active/<project>/Content/Articles/`
 - `work-product + website + article`
-  `-> 02-Projects/Workspaces/Website/Articles/`
+  `-> 03-Records/Published/Articles/`
 - `work-product + products + product-manual + entity`
   `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
 - `record + journal + year`

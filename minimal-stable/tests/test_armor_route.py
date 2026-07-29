@@ -28,7 +28,7 @@ def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
 
 def test_work_product_website_article_workspace():
     result = MODULE.route_request(object_type="work-product", domain="website", artifact="article")
-    assert result.path == "02-Projects/Workspaces/Website/Articles/"
+    assert result.path == "03-Records/Published/Articles/"
 
 
 def test_work_product_website_article_project():

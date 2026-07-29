@@ -12,7 +12,7 @@ Structured routing cases only. The router does not accept natural-language task 
 
 | # | Structured input | Expected destination |
 | --- | --- | --- |
-| 1 | `work-product + website + article` | `02-Projects/Workspaces/Website/Articles/` |
+| 1 | `work-product + website + article` | `03-Records/Published/Articles/` |
 | 2 | `work-product + website + article + project=armor-website` | `02-Projects/Active/armor-website/Content/Articles/` |
 | 3 | `work-product + website + landing-page` | `02-Projects/Workspaces/Website/Landing-Pages/` |
 | 4 | `work-product + website + case-study` | `02-Projects/Workspaces/Website/Case-Studies/` |

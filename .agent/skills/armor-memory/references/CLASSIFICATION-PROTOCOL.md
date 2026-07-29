@@ -20,13 +20,14 @@ Use when the user asks to create, write, draft, edit, improve, design, prepare, 
 
 Examples:
 
-- website article
 - product manual
 - marketing copy
 - campaign plan
 - report
 - checklist
 - landing page copy
+
+ARMOR website articles use `work-product + website + article`; the Router sends them directly to `03-Records/Published/Articles/`.
 
 ### `record`
 
@@ -134,4 +135,3 @@ Before calling the router, resolve a structure like:
 ```
 
 Agents do not need to show this structure unless debugging or evaluation is requested.
-
