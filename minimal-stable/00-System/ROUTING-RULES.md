@@ -38,7 +38,7 @@ Unknown values fail immediately through `argparse choices=`.
 ### Work Product
 
 - `work-product + website + article + project`
-  `-> 02-Projects/Active/<project>/Content/Articles/`
+  `-> 03-Records/Published/Articles/`
 - `work-product + website + article`
   `-> 03-Records/Published/Articles/`
 - `work-product + products + product-manual + entity`

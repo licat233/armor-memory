@@ -180,7 +180,7 @@ def test_paths_with_spaces_work_via_symlink(tmp_path: Path):
         env={**os.environ, "ARMOR_VAULT_ROOT": "/Users/licat/armor-vault"},
     )
     assert completed.returncode == 0
-    assert completed.stdout.splitlines()[0] == "/Users/licat/armor-vault/02-Projects/Active/armor-website/Content/Articles/"
+    assert completed.stdout.splitlines()[0] == "/Users/licat/armor-vault/03-Records/Published/Articles/"
 
 
 def test_wrapper_forwards_router_arguments_unchanged():

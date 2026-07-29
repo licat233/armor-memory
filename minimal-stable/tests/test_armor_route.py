@@ -38,7 +38,7 @@ def test_work_product_website_article_project():
         artifact="article",
         project="armor-website",
     )
-    assert result.path == "02-Projects/Active/armor-website/Content/Articles/"
+    assert result.path == "03-Records/Published/Articles/"
 
 
 def test_work_product_website_landing_page_workspace():
@@ -274,7 +274,7 @@ def test_unicode_project_name_normalizes():
         artifact="article",
         project="产品 发布",
     )
-    assert result.path == "02-Projects/Active/产品-发布/Content/Articles/"
+    assert result.path == "03-Records/Published/Articles/"
 
 
 def test_unicode_entity_name_normalizes():
@@ -331,4 +331,4 @@ def test_cli_json_output():
         "--json",
     )
     assert completed.returncode == 0
-    assert '"path": "02-Projects/Active/armor-website/Content/Articles/"' in completed.stdout
+    assert '"path": "03-Records/Published/Articles/"' in completed.stdout

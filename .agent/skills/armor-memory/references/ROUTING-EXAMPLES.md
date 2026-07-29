@@ -58,7 +58,7 @@ Command:
 Expected path:
 
 ```text
-02-Projects/Active/armor-website/Content/Articles/
+03-Records/Published/Articles/
 ```
 
 ## Product manual

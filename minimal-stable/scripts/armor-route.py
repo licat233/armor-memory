@@ -37,7 +37,6 @@ SEPARATOR_PATTERN = re.compile(r"[\s_]+")
 HYPHEN_PATTERN = re.compile(r"-+")
 
 WORK_PRODUCT_ROUTES = {
-    ("website", "article"): ("Website/Articles", "Content/Articles"),
     ("website", "landing-page"): ("Website/Landing-Pages", "Website/Landing-Pages"),
     ("website", "case-study"): ("Website/Case-Studies", "Content/Case-Studies"),
     ("content", "blog-post"): ("Content/Blog-Posts", "Content/Blog-Posts"),
@@ -105,7 +104,9 @@ def slugify_name(value: str) -> str:
 
 
 def build_work_product_path(domain: str, artifact: str, project: str | None, entity: str | None) -> str:
-    if domain == "website" and artifact == "article" and not project:
+    if domain == "website" and artifact == "article":
+        if project:
+            slugify_name(project)
         return "03-Records/Published/Articles/"
 
     if domain == "products":
