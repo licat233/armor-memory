@@ -1,10 +1,10 @@
 # AI Agent Memory Architecture
 
-This document is the fastest complete orientation for an AI agent.
+This document is a historical architecture overview from the repository's pre-Minimal-Stable era.
 
-Read this first when you need to understand, install, update, operate, or audit this project. After reading it, only open the deeper specification files that are relevant to the task.
+For the current active system, start with [`README.md`](README.md), which now defines the public mainline for ARMOR Minimal Stable.
 
-Current release alignment:
+Historical release alignment captured in this file:
 
 ```text
 AI Agent Memory Architecture v1.6.0

@@ -1,8 +1,8 @@
 # Agent Installation Guide
 
-> Give this file to an AI agent so it can install AI Agent Memory Architecture into an Obsidian Vault or trusted Markdown directory.
+> Historical install guide for the earlier AI Agent Memory Architecture / ARMOR Enterprise line.
 >
-> Default install: `enterprise` / ARMOR Enterprise AI Workspace.
+> For the current active public system, start with [`README.md`](README.md) and the `minimal-stable/` tree instead of treating this file as the default install path.
 >
 > This is an architecture installation, not a software package installation. Do not install Obsidian UI plugins. Do not treat runtime memory, embeddings, SQLite, or indexes as the durable memory source.
 

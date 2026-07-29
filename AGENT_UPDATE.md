@@ -1,6 +1,8 @@
 # Agent Update Guide
 
-This guide is for AI agents updating an existing Vault or Markdown workspace to a newer version of AI Agent Memory Architecture.
+This guide is a historical update workflow for the earlier AI Agent Memory Architecture / ARMOR Enterprise line.
+
+For the current active public system, start with [`README.md`](README.md) and the `minimal-stable/` workflow documents.
 
 It is intentionally different from `AGENT_INSTALL.md`.
 
@@ -16,7 +18,7 @@ Update answers:
 How do I align an existing Vault with the latest architecture without leaving stale active files behind?
 ```
 
-Current target:
+Historical target captured in this document:
 
 ```text
 AI Agent Memory Architecture v1.6.0
