@@ -158,12 +158,15 @@ User request:
 
 > 写三条 LinkedIn 社媒文案。
 
+Official social content has one destination and no Workspace-to-Published move/copy lifecycle. Temporary or internal exploration belongs in Workspaces under other classifications.
+
 Classification:
 
 ```yaml
 object: work-product
 domain: marketing
 artifact: social-copy
+project: null
 ```
 
 Command:
@@ -178,7 +181,40 @@ Command:
 Expected path:
 
 ```text
-02-Projects/Workspaces/Marketing/Social-Copy/
+03-Records/Published/Social-Media/
+```
+
+## Social copy with active project
+
+Official social content always routes to `03-Records/Published/Social-Media/`, whether or not `--project` is supplied. If a project is supplied, it is still validated for path safety but does not change the destination.
+
+User request:
+
+> 为秋季新品发布项目准备社媒文案。
+
+Classification:
+
+```yaml
+object: work-product
+domain: marketing
+artifact: social-copy
+project: fall-launch
+```
+
+Command:
+
+```bash
+.agent/skills/armor-memory/scripts/route.sh \
+  --object work-product \
+  --domain marketing \
+  --artifact social-copy \
+  --project fall-launch
+```
+
+Expected path:
+
+```text
+03-Records/Published/Social-Media/
 ```
 
 ## Operations checklist

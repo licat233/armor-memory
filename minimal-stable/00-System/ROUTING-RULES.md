@@ -41,8 +41,16 @@ Unknown values fail immediately through `argparse choices=`.
   `-> 03-Records/Published/Articles/`
 - `work-product + website + article`
   `-> 03-Records/Published/Articles/`
+- `work-product + marketing + social-copy + project`
+  `-> 03-Records/Published/Social-Media/`
+- `work-product + marketing + social-copy`
+  `-> 03-Records/Published/Social-Media/`
 - `work-product + products + product-manual + entity`
   `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
+
+Official social content has one destination and no Workspace-to-Published
+move/copy lifecycle. Temporary or internal social exploration stays in
+Workspaces under other classifications.
 
 ### Record
 

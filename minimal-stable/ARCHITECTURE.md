@@ -74,6 +74,10 @@ Rejected inputs:
   `-> 03-Records/Published/Articles/`
 - `work-product + website + article`
   `-> 03-Records/Published/Articles/`
+- `work-product + marketing + social-copy + project`
+  `-> 03-Records/Published/Social-Media/`
+- `work-product + marketing + social-copy`
+  `-> 03-Records/Published/Social-Media/`
 - `work-product + products + product-manual + entity`
   `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
 - `record + journal + year`

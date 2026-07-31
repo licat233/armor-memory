@@ -29,6 +29,8 @@ Examples:
 
 ARMOR website articles use `work-product + website + article`; the Router sends them directly to `03-Records/Published/Articles/`.
 
+Official social content uses `work-product + marketing + social-copy`; the Router sends it directly to `03-Records/Published/Social-Media/` whether or not `--project` is supplied. Official social content has one destination and no Workspace-to-Published move/copy lifecycle. Temporary or internal social exploration stays in Workspaces under other classifications.
+
 ### `record`
 
 Use when preserving something that already happened or was received.

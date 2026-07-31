@@ -28,7 +28,7 @@ Do not call this system `V8.0`.
 - Migration: Completed on 2026-07-28
 - Active Vault: `/Users/licat/armor-vault`
 - Legacy V7.2: Frozen and read-only
-- Test baseline: `102 passed`
+- Test baseline: `104 passed`
 
 ## Architecture Flow
 
@@ -140,7 +140,7 @@ cd /Volumes/MacData/projects/AI-Agent-Memory-Architecture
 python3 -m pytest minimal-stable/tests -v
 ```
 
-Current accepted baseline: `102 passed`
+Current accepted baseline: `104 passed`
 
 Run the test suite after changes to routing, Vault path handling, Skill integration, or migration tooling.
 

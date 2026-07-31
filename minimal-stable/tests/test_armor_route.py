@@ -88,7 +88,27 @@ def test_work_product_marketing_email_sequence_project():
 
 def test_work_product_marketing_social_copy_workspace():
     result = MODULE.route_request(object_type="work-product", domain="marketing", artifact="social-copy")
-    assert result.path == "02-Projects/Workspaces/Marketing/Social-Copy/"
+    assert result.path == "03-Records/Published/Social-Media/"
+
+
+def test_work_product_marketing_social_copy_project():
+    result = MODULE.route_request(
+        object_type="work-product",
+        domain="marketing",
+        artifact="social-copy",
+        project="Launch 2026",
+    )
+    assert result.path == "03-Records/Published/Social-Media/"
+
+
+def test_social_copy_project_validated_for_path_safety():
+    with pytest.raises(ValueError, match="path traversal"):
+        MODULE.route_request(
+            object_type="work-product",
+            domain="marketing",
+            artifact="social-copy",
+            project="../escape",
+        )
 
 
 def test_work_product_products_manual_workspace():

@@ -44,7 +44,6 @@ WORK_PRODUCT_ROUTES = {
     ("content", "case-study"): ("Content/Case-Studies", "Content/Case-Studies"),
     ("marketing", "campaign"): ("Marketing/Campaigns", "Marketing/Campaigns"),
     ("marketing", "email-sequence"): ("Marketing/Email-Sequences", "Marketing/Email-Sequences"),
-    ("marketing", "social-copy"): ("Marketing/Social-Copy", "Marketing/Social-Copy"),
     ("operations", "process-doc"): ("Operations/Process-Docs", "Operations/Process-Docs"),
     ("operations", "checklist"): ("Operations/Checklists", "Operations/Checklists"),
     ("operations", "internal-report"): ("Operations/Internal-Reports", "Operations/Internal-Reports"),
@@ -108,6 +107,11 @@ def build_work_product_path(domain: str, artifact: str, project: str | None, ent
         if project:
             slugify_name(project)
         return "03-Records/Published/Articles/"
+
+    if domain == "marketing" and artifact == "social-copy":
+        if project:
+            slugify_name(project)
+        return "03-Records/Published/Social-Media/"
 
     if domain == "products":
         if artifact == "product-manual":

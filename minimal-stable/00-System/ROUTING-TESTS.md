@@ -21,7 +21,7 @@ Structured routing cases only. The router does not accept natural-language task 
 | 7 | `work-product + content + case-study + project=q4-content` | `02-Projects/Active/q4-content/Content/Case-Studies/` |
 | 8 | `work-product + marketing + campaign` | `02-Projects/Workspaces/Marketing/Campaigns/` |
 | 9 | `work-product + marketing + email-sequence + project=launch-2026` | `02-Projects/Active/launch-2026/Marketing/Email-Sequences/` |
-| 10 | `work-product + marketing + social-copy` | `02-Projects/Workspaces/Marketing/Social-Copy/` |
+| 10 | `work-product + marketing + social-copy` | `03-Records/Published/Social-Media/` |
 | 11 | `work-product + products + product-manual + entity=armor-pro-panel` | `02-Projects/Workspaces/Products/armor-pro-panel/Documentation/` |
 | 12 | `work-product + products + product-manual + entity=armor-pro-panel + project=manual-refresh` | `02-Projects/Active/manual-refresh/Products/armor-pro-panel/Documentation/` |
 | 13 | `work-product + products + spec-sheet + entity=line-bar-x` | `02-Projects/Workspaces/Products/line-bar-x/Spec-Sheets/` |
@@ -50,3 +50,4 @@ Structured routing cases only. The router does not accept natural-language task 
 | 36 | invalid domain and artifact combination | fail |
 | 37 | path traversal in project or entity | fail |
 | 38 | Unicode project or entity name | normalize with deterministic slug rules |
+| 39 | `work-product + marketing + social-copy + project=launch-2026` | `03-Records/Published/Social-Media/` |
