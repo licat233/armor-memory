@@ -92,6 +92,93 @@ When solving a new knowledge-system requirement, prefer this order:
 
 Correctness, recoverability, and long-term knowledge integrity take priority over feature count.
 
+## Knowledge Quality Capability
+
+The first post-routing capability added to Minimal Stable is intentionally narrow: read-only knowledge-quality diagnostics.
+
+The implementation is one standard-library Python tool:
+
+```text
+scripts/armor-knowledge.py
+```
+
+It exposes two commands:
+
+```text
+check
+  -> scan 01-Knowledge only
+  -> report authority/provenance/duplicate-title diagnostics
+  -> never modify the Vault
+
+diff
+  -> compare a current Markdown file with a candidate file
+  -> show a unified diff
+  -> never approve or apply the change
+```
+
+### Why This Capability Is Admitted
+
+Benefit:
+
+- makes missing or invalid authority visible;
+- makes weak provenance on verified/canonical pages visible;
+- identifies possible duplicate knowledge pages before they become harder to manage;
+- gives humans a concrete diff before material canonical edits;
+- creates a machine-readable JSON diagnostic without creating another database.
+
+Cost and risk:
+
+- one Python script, one thin Agent wrapper, and focused tests;
+- Python standard library only;
+- no persistent derived state;
+- no daemon, scheduler, service, database, embedding model, or network dependency;
+- diagnostics can produce false positives, so uncertain findings remain warnings.
+
+Net decision:
+
+```text
+Admit
+```
+
+The benefit is materially greater than the operational cost, and removal of the tool would not affect the Vault or canonical knowledge.
+
+### Diagnostic Severity Boundary
+
+Hard errors are reserved for conditions that are clearly invalid under current Minimal Stable rules, such as an unsupported explicit authority value or a file that cannot be read.
+
+Advisory warnings include:
+
+- missing authority, because retrieval already falls back to `working`;
+- `evidence` authority found inside Knowledge;
+- verified/canonical pages without an explicit provenance marker;
+- duplicate titles;
+- multiple canonical pages with the same normalized title.
+
+A title collision is not proof that two pages represent the same entity. The tool must not infer deletion, merging, demotion, or promotion from a warning.
+
+### Explicit-Only Operation
+
+Knowledge-quality checks are not part of ordinary reads or writes.
+
+They run only when explicitly requested for audit, diagnosis, review, or knowledge maintenance. This avoids turning a simple memory operation into a hidden full-Vault maintenance workflow.
+
+### Deferred Capabilities
+
+The following remain `Not now` until a concrete ARMOR problem demonstrates that the existing approach is insufficient:
+
+- semantic duplicate detection using embeddings;
+- natural-language fact conflict detection;
+- automatic canonical rewriting or merging;
+- automatic authority promotion/demotion;
+- vector database or semantic-search service;
+- knowledge graph / GraphRAG;
+- persistent health database or dashboard backend;
+- scheduled or background Vault scanning;
+- full document-ingestion platform;
+- MCP server solely for knowledge-quality tooling.
+
+These capabilities may be revisited individually through the Feature Admission Gate. They are not bundled into a future version by default.
+
 ## Required Deliverables
 
 This implementation includes:
@@ -102,7 +189,9 @@ This implementation includes:
 - `00-System/DIRECTORY-GUIDE.md`
 - `00-System/ROUTING-TESTS.md`
 - `scripts/armor-route.py`
+- `scripts/armor-knowledge.py`
 - `tests/test_armor_route.py`
+- `tests/test_armor_knowledge.py`
 
 ## Router Interface
 
