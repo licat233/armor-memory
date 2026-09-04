@@ -1,6 +1,8 @@
 # ARMOR Minimal Stable Development Rules
 
-This directory implements deterministic document routing.
+This directory implements deterministic document routing plus a deliberately small, read-only knowledge-quality capability.
+
+Routing rules:
 
 - Do not add natural-language keyword inference.
 - Do not call an LLM from the router.
@@ -8,7 +10,21 @@ This directory implements deterministic document routing.
 - Do not add implicit Inbox fallbacks.
 - Do not silently accept unknown values.
 - Every new enum or route requires documentation and tests.
+
+Knowledge-quality rules:
+
+- `armor-knowledge check` is diagnostic and read-only.
+- Do not add automatic fixes, merges, deletions, authority promotion, or canonical rewriting to the quality tool.
+- Do not run quality scans automatically after ordinary reads or writes.
+- Keep uncertain duplicate/provenance findings advisory rather than turning heuristics into hard errors.
+- Prefer Python standard-library implementation while the current capability can be expressed reliably without a dependency.
+- Do not import historical V7.2 authority values into Minimal Stable diagnostics.
+- Current Minimal Stable authority values are `working`, `verified`, `canonical`, and `evidence`; knowledge without an explicit authority is treated as `working` during retrieval.
+
+Testing:
+
 - Run: `python3 -m pytest minimal-stable/tests -v`
+- Focused knowledge-quality suite: `python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q`
 - Do not modify V7.2 while working in this directory.
 
 ## Minimal Stable Feature Rules
