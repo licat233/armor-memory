@@ -3,7 +3,7 @@ type: "system"
 status: "active"
 authority: "canonical"
 created: "2026-07-27"
-updated: "2026-07-27"
+updated: "2026-09-05"
 ---
 
 # Authority Rules
@@ -26,12 +26,42 @@ Draft is a status, not a top-level destination.
 - `canonical`: the current reference version for that document or knowledge page
 - `evidence`: a record that documents what happened or what was received
 
+A knowledge file without an explicit `authority` field is treated as `working`. Location inside `01-Knowledge/` does not by itself promote authority.
+
+## Knowledge Quality Diagnostics
+
+`armor-knowledge check` is a read-only diagnostic for `01-Knowledge/`.
+
+It may report:
+
+- missing authority as a warning;
+- unsupported authority values as an error;
+- `evidence` authority in Knowledge as a classification warning;
+- verified or canonical knowledge without an explicit provenance marker as a warning;
+- duplicate titles and possible canonical title collisions as warnings.
+
+Warnings are investigation prompts, not automatic correction instructions. A duplicate title does not prove that two pages represent the same entity or that either page should be deleted.
+
+The diagnostic must not:
+
+- edit frontmatter;
+- promote or demote authority;
+- merge or delete pages;
+- rewrite canonical knowledge;
+- create a separate knowledge database or source of truth.
+
 ## Canonical Update Procedure
 
-1. Edit the document in its purpose-based location.
-2. Verify the change against the relevant source or reviewer.
-3. Mark the updated file as the current canonical version in its local metadata or document note.
-4. Add a short changelog note describing what changed and why.
+1. Read the current canonical document.
+2. Identify the exact proposed change and the relevant source or reviewer basis.
+3. Present the material change to the human before writing. When current and candidate files exist, use `armor-knowledge diff` to show the change.
+4. Obtain explicit approval for the authority-changing or material canonical edit.
+5. Update the document in its purpose-based location.
+6. Verify the change against the relevant source or reviewer.
+7. Keep the updated file as the current canonical version in its local metadata or document note.
+8. Add a short changelog note describing what changed and why.
+
+The diff helper is diagnostic only. It does not approve or apply changes.
 
 ## Short Changelog Requirement
 
