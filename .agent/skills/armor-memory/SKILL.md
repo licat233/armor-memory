@@ -63,6 +63,35 @@ When a task depends on whether a claim is current or authoritative, read
 
 官方社媒内容按 `work-product + marketing + social-copy` 分类；Router 始终返回唯一目录 `03-Records/Published/Social-Media/`，无论是否提供 `--project`。官方社媒内容只有一个目的地，没有 Workspace 到 Published 的移动/复制生命周期。临时或内部探索内容归入 Workspaces 下的其他分类。
 
+## Explicit knowledge quality workflow
+
+Knowledge-quality maintenance is opt-in. Run it only when the user explicitly asks to audit, check, review, diagnose, or maintain ARMOR knowledge quality, or when an architecture/development task is specifically validating the knowledge system.
+
+Do not run a Vault-wide quality check after an ordinary read or write.
+
+Standard entry point:
+
+```bash
+bash scripts/knowledge.sh check
+```
+
+`check` is read-only and scans only `01-Knowledge/`. It reports:
+
+- missing or invalid explicit authority;
+- `evidence` authority placed in Knowledge as an advisory classification check;
+- verified/canonical pages without an explicit provenance marker;
+- possible duplicate titles, including possible canonical title collisions.
+
+Duplicate and provenance findings are advisory. The tool does not merge, delete, rewrite, promote, or demote knowledge.
+
+For a material canonical change, present the proposed change to the human before writing. When both current and candidate files exist, the standard helper is:
+
+```bash
+bash scripts/knowledge.sh diff <current.md> <candidate.md>
+```
+
+The diff helper is read-only. Human approval remains the authority gate; the tool does not approve or apply the change.
+
 ## Mandatory rules
 
 - Full-Vault search is a fallback, not the first retrieval action.
@@ -73,6 +102,7 @@ When a task depends on whether a claim is current or authoritative, read
 - Inbox is allowed only through explicit `object=unresolved`.
 - Draft is a status, not a destination.
 - Do not run extra memory-maintenance operations after an ordinary write.
+- Knowledge-quality tools are diagnostic and read-only; never treat a warning as permission to modify canonical knowledge.
 
 ## Canonical knowledge
 
