@@ -13,6 +13,19 @@ When creating or storing a persistent ARMOR Vault document:
 7. Ordinary writes are route -> write -> stop.
 8. Do not create new router enum values during ordinary work.
 
+## Active Architecture Precedence
+
+For current ARMOR Minimal Stable work, active rules are defined by:
+
+1. `README.md`
+2. `minimal-stable/ARCHITECTURE.md`
+3. `minimal-stable/00-System/`
+4. `.agent/skills/armor-memory/SKILL.md` and its current references
+
+Root-level documents that explicitly describe ARMOR Enterprise V7.2 or the pre-Minimal-Stable architecture are historical references only. In particular, do not import legacy V7.2 frontmatter, authority, lifecycle, review-queue, or promotion rules into Minimal Stable unless a current Minimal Stable document explicitly adopts them.
+
+When active and historical documents disagree, the active Minimal Stable documents above take precedence.
+
 ## Architecture Change Gate
 
 When designing, reviewing, or implementing an upgrade to `armor-memory`, preserve the Minimal Stable philosophy.
