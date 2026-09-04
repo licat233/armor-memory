@@ -1,6 +1,6 @@
 # ARMOR Minimal Stable
 
-This repository is the implementation and maintenance layer for ARMOR's shared memory architecture. It stores the router, tests, documentation, and migration tooling. It does not store live ARMOR business memory.
+This repository is the implementation and maintenance layer for ARMOR's shared memory architecture. It stores the router, tests, documentation, migration tooling, and read-only knowledge-quality tooling. It does not store live ARMOR business memory.
 
 ## Identity
 
@@ -28,7 +28,8 @@ Do not call this system `V8.0`.
 - Migration: Completed on 2026-07-28
 - Active Vault: `/Users/licat/armor-vault`
 - Legacy V7.2: Frozen and read-only
-- Test baseline: `104 passed`
+- Last verified full-suite baseline before the knowledge-quality upgrade: `104 passed`
+- Knowledge-quality focused validation on 2026-09-05: `12 passed`
 
 ## Architecture Flow
 
@@ -37,7 +38,7 @@ Codex / Claude Code / Hermes Agent
                 ↓
 Shared Skill: armor-memory
                 ↓
-Router
+Router / explicit knowledge-quality tools
                 ↓
 ARMOR_VAULT_ROOT
                 ↓
@@ -46,6 +47,7 @@ ARMOR_VAULT_ROOT
 
 - The Shared Skill defines memory behavior and routing discipline.
 - The Router determines the destination path.
+- Knowledge-quality checks are explicit, read-only diagnostics.
 - `ARMOR_VAULT_ROOT` resolves the active Vault location.
 - The Vault stores ARMOR business memory.
 - This repository stores architecture, code, tests, and maintenance tools.
@@ -79,6 +81,8 @@ armor-vault/
 - Draft and Proposal are statuses, not permanent root directories.
 - Projects and canonical Knowledge remain separate.
 - Skill controls behavior; Vault stores business memory.
+- The Vault remains the sole durable knowledge source of truth.
+- Derived tools must not become a second authoritative store.
 - Business memory must not contain unrelated personal machine administration.
 - Bulk changes must be backed up, manifest-driven, and reversible.
 - Do not recreate V7.2 lifecycle architecture.
@@ -105,6 +109,34 @@ Journal destinations resolve under:
 ```
 
 The Router determines the destination path only. It does not silently create business content.
+
+## Knowledge Quality
+
+ARMOR Minimal Stable includes a deliberately small read-only knowledge-quality layer.
+
+Agent entry point:
+
+```bash
+bash /Users/licat/AI-Agent-Skills/armor-memory/scripts/knowledge.sh check
+```
+
+Repository entry point:
+
+```bash
+python3 minimal-stable/scripts/armor-knowledge.py check
+```
+
+The `check` command scans only `01-Knowledge/` and reports authority, provenance, and possible duplicate-title issues. It does not edit, merge, delete, promote, or demote knowledge.
+
+For a material canonical change, a current file and candidate file can be compared with:
+
+```bash
+python3 minimal-stable/scripts/armor-knowledge.py diff current.md candidate.md
+```
+
+The diff is diagnostic only. Human approval remains the authority gate.
+
+Knowledge-quality maintenance is explicit-only. Ordinary reads and writes remain lightweight and do not trigger hidden full-Vault scans.
 
 ## Update Policy
 
@@ -140,11 +172,19 @@ cd /Volumes/MacData/projects/AI-Agent-Memory-Architecture
 python3 -m pytest minimal-stable/tests -v
 ```
 
-Current accepted baseline: `104 passed`
+The last previously verified full-suite baseline is `104 passed`.
 
-Run the test suite after changes to routing, Vault path handling, Skill integration, or migration tooling.
+For the knowledge-quality upgrade, the focused new suite was validated separately:
 
-The verified baseline should be updated only after a successful test run.
+```bash
+python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q
+```
+
+Result on 2026-09-05: `12 passed`.
+
+Do not replace the full-suite baseline with an inferred total until the complete repository suite has actually been run in the real repository checkout.
+
+Run the full test suite after changes to routing, Vault path handling, Skill integration, migration tooling, or knowledge-quality behavior.
 
 ## Backup And Rollback
 
@@ -177,6 +217,7 @@ It must not be used as the active ARMOR business-memory source.
 - Keep Knowledge stable and reusable.
 - Store active work in Projects.
 - Store historical evidence in Records.
+- Run knowledge-quality checks only when explicitly requested.
 - Run tests after architectural changes.
 - Back up files before bulk changes.
 
@@ -187,6 +228,7 @@ It must not be used as the active ARMOR business-memory source.
 - Do not recreate `90-Drafts`, `93-Proposals`, or other V7.2 lifecycle roots.
 - Do not add automatic update checks to normal Agent workflows.
 - Do not silently overwrite existing Vault files.
+- Do not treat diagnostic warnings as permission to modify canonical knowledge.
 - Do not mix personal machine maintenance into ARMOR business memory.
 - Do not rename the shared Skill away from `armor-memory`.
 
@@ -203,13 +245,13 @@ shared/document-map/
 ```
 
 `minimal-stable/scripts/`
-Router and migration utilities.
+Router, migration utilities, and the read-only knowledge-quality tool.
 
 `minimal-stable/tests/`
-Automated verification for routing, migration safety, and Agent integration.
+Automated verification for routing, migration safety, Agent integration, and knowledge-quality behavior.
 
 `shared/`
-Shared standards and templates used by the architecture repository.
+Shared standards and templates retained by the architecture repository. Historical V7.2-oriented standards must not override active Minimal Stable rules.
 
 ## Migration History
 
