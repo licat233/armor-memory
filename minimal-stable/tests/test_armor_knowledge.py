@@ -6,7 +6,9 @@ import sys
 from pathlib import Path
 
 
-SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "armor-knowledge.py"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+SCRIPT_PATH = REPO_ROOT / "minimal-stable" / "scripts" / "armor-knowledge.py"
+WRAPPER_PATH = REPO_ROOT / ".agent" / "skills" / "armor-memory" / "scripts" / "knowledge.sh"
 
 
 def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
@@ -86,7 +88,7 @@ def test_source_ref_satisfies_provenance_advisory(tmp_path: Path):
     assert "Findings: none" in completed.stdout
 
 
-def test_duplicate_titles_are_warning_when_not_multiple_canonical(tmp_path: Path):
+def test_duplicate_titles_are_advisory(tmp_path: Path):
     vault = make_vault(tmp_path)
     write_knowledge(vault, "one.md", '---\nauthority: "working"\n---\n# Power Track System\n')
     write_knowledge(vault, "two.md", '---\nauthority: "verified"\nsource_ref: "spec.md"\n---\n# Power Track System\n')
@@ -97,15 +99,26 @@ def test_duplicate_titles_are_warning_when_not_multiple_canonical(tmp_path: Path
     assert completed.stdout.count("[duplicate_title]") == 2
 
 
-def test_multiple_canonical_pages_with_same_title_are_errors(tmp_path: Path):
+def test_multiple_canonical_pages_with_same_title_remain_advisory(tmp_path: Path):
     vault = make_vault(tmp_path)
     write_knowledge(vault, "one.md", '---\nauthority: "canonical"\nsource_ref: "one.md"\n---\n# Power Track\n')
     write_knowledge(vault, "two.md", '---\nauthority: "canonical"\nsource_ref: "two.md"\n---\n# Power Track\n')
 
     completed = run_cli("check", "--vault", str(vault))
 
-    assert completed.returncode == 1
-    assert completed.stdout.count("[canonical_title_collision]") == 2
+    assert completed.returncode == 0
+    assert completed.stdout.count("[possible_canonical_title_collision]") == 2
+    assert "Errors: 0" in completed.stdout
+
+
+def test_evidence_authority_in_knowledge_is_advisory(tmp_path: Path):
+    vault = make_vault(tmp_path)
+    write_knowledge(vault, "evidence.md", '---\nauthority: "evidence"\n---\n# Evidence\n')
+
+    completed = run_cli("check", "--vault", str(vault))
+
+    assert completed.returncode == 0
+    assert "[evidence_in_knowledge]" in completed.stdout
 
 
 def test_check_json_is_machine_readable_and_scoped_to_knowledge(tmp_path: Path):
@@ -158,3 +171,18 @@ def test_diff_reports_no_changes(tmp_path: Path):
 
     assert completed.returncode == 0
     assert completed.stdout.strip() == "No changes."
+
+
+def test_agent_wrapper_invokes_repo_tool(tmp_path: Path):
+    vault = make_vault(tmp_path)
+    write_knowledge(vault, "knowledge.md", '---\nauthority: "working"\n---\n# Knowledge\n')
+
+    completed = subprocess.run(
+        ["bash", str(WRAPPER_PATH), "check", "--vault", str(vault)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+
+    assert completed.returncode == 0
+    assert "ARMOR Knowledge Quality" in completed.stdout
