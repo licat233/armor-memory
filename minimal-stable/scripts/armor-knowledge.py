@@ -227,26 +227,16 @@ def audit_knowledge(vault_root: Path) -> tuple[dict[str, object], list[Finding]]
             continue
         canonical_group = [document for document in group if document.authority == "canonical"]
         paths_text = ", ".join(document.relative_path for document in group)
-        if len(canonical_group) > 1:
-            for document in canonical_group:
-                findings.append(
-                    Finding(
-                        "error",
-                        "canonical_title_collision",
-                        document.relative_path,
-                        f"Multiple canonical knowledge pages share title {normalized_title!r}: {paths_text}",
-                    )
+        code = "possible_canonical_title_collision" if len(canonical_group) > 1 else "duplicate_title"
+        for document in group:
+            findings.append(
+                Finding(
+                    "warning",
+                    code,
+                    document.relative_path,
+                    f"Possible duplicate knowledge title {normalized_title!r}: {paths_text}",
                 )
-        else:
-            for document in group:
-                findings.append(
-                    Finding(
-                        "warning",
-                        "duplicate_title",
-                        document.relative_path,
-                        f"Possible duplicate knowledge title {normalized_title!r}: {paths_text}",
-                    )
-                )
+            )
 
     severity_counts = Counter(finding.severity for finding in findings)
     summary: dict[str, object] = {
