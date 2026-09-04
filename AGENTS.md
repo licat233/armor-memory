@@ -13,3 +13,27 @@ When creating or storing a persistent ARMOR Vault document:
 7. Ordinary writes are route -> write -> stop.
 8. Do not create new router enum values during ordinary work.
 
+## Architecture Change Gate
+
+When designing, reviewing, or implementing an upgrade to `armor-memory`, preserve the Minimal Stable philosophy.
+
+Before adding any feature, service, database, index, automation, schema, workflow, dependency, or background process, evaluate all of the following:
+
+1. What concrete recurring problem does it solve?
+2. What measurable or operational benefit does it provide?
+3. Can the same result be achieved with an existing component or a simpler change?
+4. What new failure modes, data-integrity risks, security risks, synchronization problems, and maintenance work does it introduce?
+5. Does it create another source of truth or duplicate knowledge already stored in the Vault?
+6. Can it be removed or rebuilt without losing canonical ARMOR knowledge?
+7. Is the expected benefit clearly greater than the combined complexity, risk, and long-term maintenance cost?
+
+If the answer to item 7 is not clearly yes, do not add the feature by default. `Not now` is an acceptable architecture decision.
+
+Additional rules:
+
+- Do not add features merely because another mature project has them or because they are technically possible.
+- Prefer the smallest change that preserves correctness, recoverability, and long-term knowledge integrity.
+- The ARMOR Vault remains the durable source of truth. Search indexes, embeddings, vector stores, caches, graphs, databases, and generated registries must remain derived and rebuildable unless an explicit architecture decision says otherwise.
+- New infrastructure must not silently become a second authoritative knowledge store.
+- Prefer extending existing ARMOR components over introducing a new subsystem.
+- Any architecture proposal that adds persistent infrastructure must state its benefit, operational cost, failure modes, rollback path, and why the existing system is insufficient.
