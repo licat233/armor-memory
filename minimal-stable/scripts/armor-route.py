@@ -103,15 +103,17 @@ def slugify_name(value: str) -> str:
 
 
 def build_work_product_path(domain: str, artifact: str, project: str | None, entity: str | None) -> str:
+    # Channel content has one lifecycle-neutral home. A supplied project is
+    # validated for safety/context but does not change the stable destination.
     if domain == "website" and artifact == "article":
         if project:
             slugify_name(project)
-        return "03-Records/Published/Articles/"
+        return "02-Projects/Workspaces/Website/Articles/"
 
     if domain == "marketing" and artifact == "social-copy":
         if project:
             slugify_name(project)
-        return "03-Records/Published/Social-Media/"
+        return "02-Projects/Workspaces/Marketing/Social-Media/"
 
     if domain == "products":
         if artifact == "product-manual":
@@ -120,7 +122,7 @@ def build_work_product_path(domain: str, artifact: str, project: str | None, ent
             entity_slug = slugify_name(entity)
             if project:
                 project_slug = slugify_name(project)
-                return f"02-Projects/Active/{project_slug}/Products/{entity_slug}/Documentation/"
+                return f"02-Projects/Projects/{project_slug}/Products/{entity_slug}/Documentation/"
             return f"02-Projects/Workspaces/Products/{entity_slug}/Documentation/"
         if artifact == "spec-sheet":
             if not entity:
@@ -128,7 +130,7 @@ def build_work_product_path(domain: str, artifact: str, project: str | None, ent
             entity_slug = slugify_name(entity)
             if project:
                 project_slug = slugify_name(project)
-                return f"02-Projects/Active/{project_slug}/Products/{entity_slug}/Spec-Sheets/"
+                return f"02-Projects/Projects/{project_slug}/Products/{entity_slug}/Spec-Sheets/"
             return f"02-Projects/Workspaces/Products/{entity_slug}/Spec-Sheets/"
         if artifact == "price-list":
             if not entity:
@@ -136,7 +138,7 @@ def build_work_product_path(domain: str, artifact: str, project: str | None, ent
             entity_slug = slugify_name(entity)
             if project:
                 project_slug = slugify_name(project)
-                return f"02-Projects/Active/{project_slug}/Products/{entity_slug}/Price-Lists/"
+                return f"02-Projects/Projects/{project_slug}/Products/{entity_slug}/Price-Lists/"
             return f"02-Projects/Workspaces/Products/{entity_slug}/Price-Lists/"
         raise ValueError(f"artifact {artifact!r} is not supported for domain {domain!r}")
 
@@ -147,7 +149,7 @@ def build_work_product_path(domain: str, artifact: str, project: str | None, ent
     workspace_tail, project_tail = route
     if project:
         project_slug = slugify_name(project)
-        return f"02-Projects/Active/{project_slug}/{project_tail}/"
+        return f"02-Projects/Projects/{project_slug}/{project_tail}/"
     return f"02-Projects/Workspaces/{workspace_tail}/"
 
 
