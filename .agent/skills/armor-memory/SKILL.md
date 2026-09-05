@@ -37,8 +37,7 @@ When a task depends on whether a claim is current or authoritative, read
 `references/AUTHORITY-GUIDE.md`.
 
 - Use only an explicit `authority` field to assign an authority level.
-- `status: active` is a lifecycle state. It does not mean `verified` or
-  `canonical`.
+- `status` is optional lifecycle metadata. It does not mean `verified` or `canonical` and must not become a recurring human-maintenance obligation.
 - `revision`, `source_quality`, `write_policy`, document type, and location in
   `01-Knowledge/` do not promote a file to `verified` or `canonical`.
 - If a knowledge file has no explicit authority, treat it as `working` and
@@ -51,6 +50,25 @@ When a task depends on whether a claim is current or authoritative, read
   explicitly verified or canonical source, or was verified in the current
   task.
 
+## Human-cost minimization
+
+Human attention is reserved for material business judgment, unresolved authority, or ambiguity that the Agent cannot safely resolve.
+
+Do not make the human act as a file administrator.
+
+The Agent should perform deterministic or already-authorized maintenance itself, including:
+
+- choosing the Router destination;
+- updating routine status metadata when useful;
+- applying a conflict resolution after the human has already decided it;
+- completing scoped knowledge convergence after approval;
+- re-routing and moving a previously unresolved item once the user supplies the missing classification information;
+- other mechanical cleanup that follows directly from the current approved task.
+
+Do not ask for a second confirmation when the user's current instruction already explicitly approves the exact change, resolves the conflict, or says which conclusion should be the current reference.
+
+Do not require humans to move files merely because a lifecycle state changed. Directory location represents operational purpose, not lifecycle status.
+
 ## Write workflow
 
 1. Classify the task using `references/CLASSIFICATION-PROTOCOL.md`.
@@ -58,7 +76,8 @@ When a task depends on whether a claim is current or authoritative, read
 3. Call `scripts/route.sh`.
 4. Use exactly the path returned by the router.
 5. Write or update the document.
-6. Stop.
+6. If this task resolves the classification of a previously unresolved Vault item, re-route and move that item to the returned destination in the same task. Do not leave a manual Inbox cleanup step for the human.
+7. Stop.
 
 官网文章仍按 `work-product + website + article` 分类；Router 会直接返回唯一文章目录 `03-Records/Published/Articles/`。
 
@@ -85,13 +104,13 @@ bash scripts/knowledge.sh check
 
 Duplicate and provenance findings are advisory. The tool does not merge, delete, rewrite, promote, or demote knowledge.
 
-For a material canonical change, present the proposed change to the human before writing. When both current and candidate files exist, the standard helper is:
+For a material canonical change, present the proposed change when human judgment is still required. When both current and candidate files exist, the standard helper is:
 
 ```bash
 bash scripts/knowledge.sh diff <current.md> <candidate.md>
 ```
 
-The diff helper is read-only. Human approval remains the authority gate; the tool does not approve or apply the change.
+The diff helper is read-only. It does not create authority by itself. If the current user instruction already explicitly approves the exact change, do not request duplicate approval merely because a diff was shown.
 
 ## Explicit knowledge compilation workflow
 
@@ -116,7 +135,7 @@ Do not trigger it merely because an ordinary project, record, article, social po
    - `AMBIGUOUS` — identity, target, meaning, scope, or authority cannot be resolved reliably.
 7. Preserve provenance using stable source references and human-readable locators when available.
 8. For `CREATE` or `UPDATE`, prepare the smallest useful candidate change. New Knowledge defaults to `working` unless it is explicitly verified or approved under the authority rules.
-9. For a material canonical change, stop at a proposed diff until the required human approval is obtained.
+9. For a material canonical change, determine whether authority is already sufficient from the user's current instruction or an explicitly designated authoritative source. Ask the human only when material judgment remains unresolved.
 10. For `CONFLICT` or `AMBIGUOUS`, do not improvise a resolution. Surface the exact competing claims, their authority/provenance, and the decision required.
 
 ### Conflict closure
@@ -125,7 +144,7 @@ A human answer that resolves a knowledge conflict is not merely a chat answer. I
 
 After the human explicitly resolves a conflict:
 
-1. Apply the approved resolution to the intended current Knowledge target.
+1. Apply the approved resolution to the intended current Knowledge target without asking for duplicate confirmation.
 2. Preserve relevant provenance and add the required short changelog for material verified/canonical changes.
 3. Search the same relevant `01-Knowledge/` scope for other current Knowledge that still presents the rejected claim as current truth.
 4. Converge those competing current claims so the same resolved conflict does not remain active for the next Agent. Do not silently discard distinct valid knowledge while doing so.
@@ -166,7 +185,8 @@ The purpose of topic convergence is to reduce how many documents a human or Agen
 - Never route unverified content to Inbox merely because it is unverified.
 - Inbox is allowed only through explicit `object=unresolved`.
 - Draft is a status, not a destination.
-- Do not run extra memory-maintenance operations after an ordinary write.
+- Do not create human-maintained lifecycle queues or require manual file moves for routine state changes.
+- Do not run extra memory-maintenance operations after an ordinary write unless the current task explicitly resolved a prior unresolved item or requested scoped knowledge convergence.
 - Knowledge-quality tools are diagnostic and read-only; never treat a warning as permission to modify canonical knowledge.
 - Do not leave a human-resolved contradiction active in current Knowledge when the explicit task is conflict resolution or knowledge convergence.
 - Do not rewrite evidence/history merely to make it agree with current Knowledge.
