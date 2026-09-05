@@ -27,20 +27,11 @@ Knowledge-quality rules:
 - Current authority values are `working`, `verified`, `canonical`, and `evidence`; knowledge without an explicit authority is treated as `working` during retrieval.
 - Do not import deprecated authority vocabularies or retired lifecycle rules into current diagnostics.
 
-Lifecycle-neutral migration rules:
-
-- `migrate-lifecycle-neutral.py` is a bounded one-time migration tool for `02-Projects/Active/ -> 02-Projects/Projects/`.
-- Dry-run must remain the default; `--apply` is required for mutation.
-- Destination collisions must fail before moves begin.
-- Do not bulk-migrate `03-Records/Published/`; legacy publication paths have mixed historical semantics under the old router.
-- Remove the migration script and focused migration test after the live Vault migration is complete and no active dependency remains.
-
 Testing:
 
 - Run: `python3 -m pytest minimal-stable/tests -v`
 - Focused knowledge-quality suite: `python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q`
-- Focused lifecycle-migration suite: `python3 -m pytest minimal-stable/tests/test_lifecycle_neutral_migration.py -q`
-- Current tests cover routing, Agent integration, knowledge quality, and the temporary lifecycle-neutral migration.
+- Current tests cover routing, Agent integration, and knowledge quality.
 
 ## Minimal Stable Feature Rules
 
