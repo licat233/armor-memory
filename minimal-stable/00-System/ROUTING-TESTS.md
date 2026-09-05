@@ -12,23 +12,23 @@ Structured routing cases only. The router does not accept natural-language task 
 
 | # | Structured input | Expected destination |
 | --- | --- | --- |
-| 1 | `work-product + website + article` | `03-Records/Published/Articles/` |
-| 2 | `work-product + website + article + project=armor-website` | `03-Records/Published/Articles/` |
+| 1 | `work-product + website + article` | `02-Projects/Workspaces/Website/Articles/` |
+| 2 | `work-product + website + article + project=armor-website` | `02-Projects/Workspaces/Website/Articles/` |
 | 3 | `work-product + website + landing-page` | `02-Projects/Workspaces/Website/Landing-Pages/` |
 | 4 | `work-product + website + case-study` | `02-Projects/Workspaces/Website/Case-Studies/` |
 | 5 | `work-product + content + blog-post` | `02-Projects/Workspaces/Content/Blog-Posts/` |
 | 6 | `work-product + content + report` | `02-Projects/Workspaces/Content/Reports/` |
-| 7 | `work-product + content + case-study + project=q4-content` | `02-Projects/Active/q4-content/Content/Case-Studies/` |
+| 7 | `work-product + content + case-study + project=q4-content` | `02-Projects/Projects/q4-content/Content/Case-Studies/` |
 | 8 | `work-product + marketing + campaign` | `02-Projects/Workspaces/Marketing/Campaigns/` |
-| 9 | `work-product + marketing + email-sequence + project=launch-2026` | `02-Projects/Active/launch-2026/Marketing/Email-Sequences/` |
-| 10 | `work-product + marketing + social-copy` | `03-Records/Published/Social-Media/` |
+| 9 | `work-product + marketing + email-sequence + project=launch-2026` | `02-Projects/Projects/launch-2026/Marketing/Email-Sequences/` |
+| 10 | `work-product + marketing + social-copy` | `02-Projects/Workspaces/Marketing/Social-Media/` |
 | 11 | `work-product + products + product-manual + entity=armor-pro-panel` | `02-Projects/Workspaces/Products/armor-pro-panel/Documentation/` |
-| 12 | `work-product + products + product-manual + entity=armor-pro-panel + project=manual-refresh` | `02-Projects/Active/manual-refresh/Products/armor-pro-panel/Documentation/` |
+| 12 | `work-product + products + product-manual + entity=armor-pro-panel + project=manual-refresh` | `02-Projects/Projects/manual-refresh/Products/armor-pro-panel/Documentation/` |
 | 13 | `work-product + products + spec-sheet + entity=line-bar-x` | `02-Projects/Workspaces/Products/line-bar-x/Spec-Sheets/` |
-| 14 | `work-product + products + price-list + entity=shelf-led + project=pricing-2026` | `02-Projects/Active/pricing-2026/Products/shelf-led/Price-Lists/` |
+| 14 | `work-product + products + price-list + entity=shelf-led + project=pricing-2026` | `02-Projects/Projects/pricing-2026/Products/shelf-led/Price-Lists/` |
 | 15 | `work-product + operations + process-doc` | `02-Projects/Workspaces/Operations/Process-Docs/` |
 | 16 | `work-product + operations + checklist` | `02-Projects/Workspaces/Operations/Checklists/` |
-| 17 | `work-product + operations + internal-report + project=warehouse-audit` | `02-Projects/Active/warehouse-audit/Operations/Internal-Reports/` |
+| 17 | `work-product + operations + internal-report + project=warehouse-audit` | `02-Projects/Projects/warehouse-audit/Operations/Internal-Reports/` |
 | 18 | `record + meeting` | `03-Records/Meetings/` |
 | 19 | `record + email` | `03-Records/Emails/` |
 | 20 | `record + conversation` | `03-Records/Conversations/` |
@@ -50,4 +50,6 @@ Structured routing cases only. The router does not accept natural-language task 
 | 36 | invalid domain and artifact combination | fail |
 | 37 | path traversal in project or entity | fail |
 | 38 | Unicode project or entity name | normalize with deterministic slug rules |
-| 39 | `work-product + marketing + social-copy + project=launch-2026` | `03-Records/Published/Social-Media/` |
+| 39 | `work-product + marketing + social-copy + project=launch-2026` | `02-Projects/Workspaces/Marketing/Social-Media/` |
+
+Lifecycle state never changes these work-product destinations. `record + published` is reserved for an actual publication record or explicitly requested published snapshot.
