@@ -28,7 +28,7 @@ def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
 
 def test_work_product_website_article_workspace():
     result = MODULE.route_request(object_type="work-product", domain="website", artifact="article")
-    assert result.path == "03-Records/Published/Articles/"
+    assert result.path == "02-Projects/Workspaces/Website/Articles/"
 
 
 def test_work_product_website_article_project():
@@ -38,7 +38,7 @@ def test_work_product_website_article_project():
         artifact="article",
         project="armor-website",
     )
-    assert result.path == "03-Records/Published/Articles/"
+    assert result.path == "02-Projects/Workspaces/Website/Articles/"
 
 
 def test_work_product_website_landing_page_workspace():
@@ -68,7 +68,7 @@ def test_work_product_content_case_study_project():
         artifact="case-study",
         project="Q4 Content",
     )
-    assert result.path == "02-Projects/Active/q4-content/Content/Case-Studies/"
+    assert result.path == "02-Projects/Projects/q4-content/Content/Case-Studies/"
 
 
 def test_work_product_marketing_campaign_workspace():
@@ -83,12 +83,12 @@ def test_work_product_marketing_email_sequence_project():
         artifact="email-sequence",
         project="Launch 2026",
     )
-    assert result.path == "02-Projects/Active/launch-2026/Marketing/Email-Sequences/"
+    assert result.path == "02-Projects/Projects/launch-2026/Marketing/Email-Sequences/"
 
 
 def test_work_product_marketing_social_copy_workspace():
     result = MODULE.route_request(object_type="work-product", domain="marketing", artifact="social-copy")
-    assert result.path == "03-Records/Published/Social-Media/"
+    assert result.path == "02-Projects/Workspaces/Marketing/Social-Media/"
 
 
 def test_work_product_marketing_social_copy_project():
@@ -98,7 +98,7 @@ def test_work_product_marketing_social_copy_project():
         artifact="social-copy",
         project="Launch 2026",
     )
-    assert result.path == "03-Records/Published/Social-Media/"
+    assert result.path == "02-Projects/Workspaces/Marketing/Social-Media/"
 
 
 def test_social_copy_project_validated_for_path_safety():
@@ -129,7 +129,7 @@ def test_work_product_products_manual_project():
         entity="Armor Pro Panel",
         project="Manual Refresh",
     )
-    assert result.path == "02-Projects/Active/manual-refresh/Products/armor-pro-panel/Documentation/"
+    assert result.path == "02-Projects/Projects/manual-refresh/Products/armor-pro-panel/Documentation/"
 
 
 def test_work_product_products_spec_sheet_workspace():
@@ -150,7 +150,7 @@ def test_work_product_products_price_list_project():
         entity="Shelf Led",
         project="Pricing 2026",
     )
-    assert result.path == "02-Projects/Active/pricing-2026/Products/shelf-led/Price-Lists/"
+    assert result.path == "02-Projects/Projects/pricing-2026/Products/shelf-led/Price-Lists/"
 
 
 def test_work_product_operations_process_doc_workspace():
@@ -170,7 +170,7 @@ def test_work_product_operations_internal_report_project():
         artifact="internal-report",
         project="Warehouse Audit",
     )
-    assert result.path == "02-Projects/Active/warehouse-audit/Operations/Internal-Reports/"
+    assert result.path == "02-Projects/Projects/warehouse-audit/Operations/Internal-Reports/"
 
 
 def test_record_meeting_routes():
@@ -294,7 +294,7 @@ def test_unicode_project_name_normalizes():
         artifact="article",
         project="产品 发布",
     )
-    assert result.path == "03-Records/Published/Articles/"
+    assert result.path == "02-Projects/Workspaces/Website/Articles/"
 
 
 def test_unicode_entity_name_normalizes():
@@ -351,4 +351,4 @@ def test_cli_json_output():
         "--json",
     )
     assert completed.returncode == 0
-    assert '"path": "03-Records/Published/Articles/"' in completed.stdout
+    assert '"path": "02-Projects/Workspaces/Website/Articles/"' in completed.stdout
