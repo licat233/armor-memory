@@ -63,7 +63,7 @@ armor-vault/
 
 - `00-System/`: system rules, start points, and operational guidance
 - `01-Knowledge/`: canonical business knowledge and reusable facts
-- `02-Projects/`: active projects and persistent workspaces
+- `02-Projects/`: named projects and persistent workspaces
 - `03-Records/`: published records, meetings, journals, and communications
 - `04-Research/`: notes and source collections for ongoing investigation
 - `90-Inbox/`: explicitly unresolved material only
@@ -78,10 +78,21 @@ armor-vault/
 - Skill controls behavior; Vault stores business memory.
 - The Vault remains the sole durable knowledge source of truth.
 - Derived tools must not become a second authoritative store.
+- Human attention is reserved for material judgment, authority, ambiguity, and risk; routine metadata, routing, status updates, and deterministic file maintenance should be performed by the Agent.
+- Do not require repeated human approval when the current instruction already authorizes the exact change.
+- Do not create recurring human-maintained lifecycle queues or folder-move chores when stable routing or metadata can represent the same outcome.
 - Business memory must not contain unrelated personal machine administration.
 - Bulk changes must be backed up, manifest-driven, and reversible.
 - Obsolete architecture copies are not retained in the current repository tree.
 - Git history is used for explicit historical investigation instead of keeping deprecated instructions beside active rules.
+
+## Human-Cost Policy
+
+ARMOR Minimal Stable should minimize recurring human operating cost as document volume and team size grow.
+
+Human involvement is justified when the system needs a real business decision, unresolved authority judgment, identity/scope clarification, or approval not already granted. Humans should not be assigned routine work such as choosing deterministic destinations, manually synchronizing status fields, repeatedly confirming an already-approved change, moving files between lifecycle folders, or cleaning Inbox items after the missing classification has already been supplied.
+
+Prefer a one-time Agent-executed migration over a permanent human-maintained process when a directory or workflow design creates lifecycle housekeeping.
 
 ## Routing
 
@@ -129,7 +140,7 @@ For a material canonical change, a current file and candidate file can be compar
 python3 minimal-stable/scripts/armor-knowledge.py diff current.md candidate.md
 ```
 
-The diff is diagnostic only. Human approval remains the authority gate.
+The diff is diagnostic only. It does not create authority by itself. A current explicit user instruction or an explicitly designated authoritative source may already provide sufficient authority for the exact requested update; do not request duplicate confirmation.
 
 Knowledge-quality maintenance is explicit-only. Ordinary reads and writes remain lightweight and do not trigger hidden full-Vault scans.
 
@@ -183,6 +194,7 @@ After structural repository cleanup or changes to routing, Vault path handling, 
 - Keep Knowledge stable and reusable.
 - Store active work in Projects.
 - Store historical evidence in Records.
+- Let the Agent perform deterministic routing, already-authorized metadata updates, scoped conflict closure, and resolved-Inbox re-routing.
 - Run knowledge-quality checks only when explicitly requested.
 - Run relevant tests after architectural changes.
 - Back up files before broad or destructive changes.
@@ -190,8 +202,10 @@ After structural repository cleanup or changes to routing, Vault path handling, 
 ### Do Not
 
 - Do not recreate superseded lifecycle roots, review queues, or authority vocabularies unless a new current requirement explicitly justifies them.
+- Do not require humans to maintain status fields or move files solely because lifecycle state changed.
+- Do not ask for duplicate approval already contained in the current instruction.
 - Do not add automatic update checks to normal Agent workflows.
-- Do not silently overwrite existing Vault files.
+- Do not silently overwrite existing Vault files without sufficient authority.
 - Do not treat diagnostic warnings as permission to modify canonical knowledge.
 - Do not mix personal machine maintenance into ARMOR business memory.
 - Do not rename the shared Skill away from `armor-memory`.
