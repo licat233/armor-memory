@@ -84,7 +84,7 @@ Current routing intentionally removes lifecycle-driven file movement:
 - `03-Records/Published/` is for actual publication evidence or an explicitly requested snapshot, not newly drafted source content;
 - publication or project completion does not itself require moving the editable source file.
 
-The temporary `migrate-lifecycle-neutral.py` tool exists only to migrate the deployed Vault from `02-Projects/Active/` to `02-Projects/Projects/`. Keep dry-run as the default, fail on destination collisions before moves, never bulk-relocate legacy `03-Records/Published/`, and remove the migration-only tool after the live migration is complete.
+The one-time live Vault migration to lifecycle-neutral project paths has been completed. Migration-only tooling must not remain in the active tree merely for historical reference; use Git history if explicit recovery is ever required.
 
 Future changes must not restore lifecycle directories merely because a status label sounds intuitive. Any new movement-based lifecycle must pass the Human-Cost Gate and Architecture Change Gate.
 
