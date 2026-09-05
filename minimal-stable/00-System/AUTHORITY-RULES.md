@@ -28,6 +28,8 @@ Draft is a status, not a top-level destination.
 
 A knowledge file without an explicit `authority` field is treated as `working`. Location inside `01-Knowledge/` does not by itself promote authority.
 
+When several materials discuss the same mature topic, an explicit canonical Knowledge page is the default current-reference entry point. Project documents, Records, Research, and other supporting material do not become peer current-truth authorities merely because they discuss the same subject.
+
 ## Knowledge Quality Diagnostics
 
 `armor-knowledge check` is a read-only diagnostic for `01-Knowledge/`.
@@ -62,6 +64,40 @@ The diagnostic must not:
 8. Add a short changelog note describing what changed and why.
 
 The diff helper is diagnostic only. It does not approve or apply changes.
+
+## Conflict Resolution And Closure
+
+A conflict is not closed merely because a human answered the Agent in the current conversation.
+
+When the human explicitly resolves competing claims, that decision should be converted into durable current Knowledge so the same settled question is not repeatedly escalated.
+
+After an explicit resolution:
+
+1. Apply the approved conclusion to the intended current Knowledge target.
+2. Preserve the source/reviewer basis for the resolution.
+3. Search the relevant `01-Knowledge/` scope for other current Knowledge that still presents the rejected claim as current truth.
+4. Reconcile those competing current claims when identity and scope are clear.
+5. If reconciliation is unsafe or ambiguous, report that conflict closure is incomplete instead of silently choosing or merging.
+6. Do not rewrite `03-Records/`, `04-Research/`, historical published material, or other evidence merely to make past documents match the new current conclusion.
+
+A later Agent should rely on the closed current Knowledge unless materially new evidence reopens the issue.
+
+This rule is intended to make human judgment durable, not to authorize automatic canonical rewriting without approval.
+
+## Topic Convergence
+
+Multiple source or working documents may legitimately coexist. Knowledge should nevertheless converge when a topic has matured enough that humans or Agents need a clear default answer to "what does ARMOR currently know, believe, or follow?"
+
+Topic convergence follows these rules:
+
+- prefer an existing canonical Knowledge entry as the default current-reference page;
+- create or update Knowledge only when the topic is reusable, repeatedly queried, operationally important, supported by multiple materials, or has produced recurring ambiguity/conflict;
+- compile ARMOR's current conclusion rather than a transcript-style summary of every source's opinion;
+- preserve unresolved questions as unresolved instead of inventing consensus;
+- supporting Project, Record, and Research documents remain evidence/history and should not compete with the canonical entry as default current truth;
+- do not create new lifecycle roots, review queues, or parallel "final" directories merely to represent convergence.
+
+The purpose of convergence is to reduce repeated interpretation and repeated human reading, not to produce more documents for their own sake.
 
 ## Short Changelog Requirement
 
