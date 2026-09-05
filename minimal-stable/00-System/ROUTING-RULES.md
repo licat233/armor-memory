@@ -3,7 +3,7 @@ type: "system"
 status: "active"
 authority: "canonical"
 created: "2026-07-27"
-updated: "2026-07-27"
+updated: "2026-09-05"
 ---
 
 # Routing Rules
@@ -33,24 +33,34 @@ python3 scripts/armor-route.py \
 
 Unknown values fail immediately through `argparse choices=`.
 
+## Lifecycle-Neutral Rule
+
+Directory location represents operational purpose, not lifecycle state.
+
+- Named project work uses `02-Projects/Projects/<project>/`; project completion does not require moving the project tree.
+- Stable channel content uses one content home regardless of draft/review/published status.
+- `03-Records/Published/` is for evidence of an actual publication event or an explicitly requested snapshot, not for newly created content merely intended for publication.
+
 ## Deterministic Rules
 
 ### Work Product
 
 - `work-product + website + article + project`
-  `-> 03-Records/Published/Articles/`
+  `-> 02-Projects/Workspaces/Website/Articles/`
 - `work-product + website + article`
-  `-> 03-Records/Published/Articles/`
+  `-> 02-Projects/Workspaces/Website/Articles/`
 - `work-product + marketing + social-copy + project`
-  `-> 03-Records/Published/Social-Media/`
+  `-> 02-Projects/Workspaces/Marketing/Social-Media/`
 - `work-product + marketing + social-copy`
-  `-> 03-Records/Published/Social-Media/`
+  `-> 02-Projects/Workspaces/Marketing/Social-Media/`
 - `work-product + products + product-manual + entity`
   `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
+- `work-product + products + product-manual + entity + project`
+  `-> 02-Projects/Projects/<project>/Products/<entity>/Documentation/`
+- other supported work-products with `--project`
+  `-> 02-Projects/Projects/<project>/<domain-specific-tail>/`
 
-Official social content has one destination and no Workspace-to-Published
-move/copy lifecycle. Temporary or internal social exploration stays in
-Workspaces under other classifications.
+Article and official social content each have one lifecycle-neutral destination. A supplied project value is still validated but does not change those two channel-content destinations.
 
 ### Record
 
@@ -58,6 +68,10 @@ Workspaces under other classifications.
   `-> 03-Records/Journal/<year>/`
 - `record + meeting`
   `-> 03-Records/Meetings/`
+- `record + published`
+  `-> 03-Records/Published/`
+
+`record + published` means publication evidence/snapshot. It does not mean editable source content.
 
 ### Knowledge
 
