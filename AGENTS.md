@@ -73,6 +73,21 @@ Required principles:
 - Prefer one-time Agent-executed migrations over permanent human-maintained lifecycle processes.
 - Avoid designs whose maintenance burden grows roughly in proportion to document count when the same outcome can be represented by stable routing, authority, or retrieval rules.
 
+## Lifecycle-Neutral Routing Guardrails
+
+Current routing intentionally removes lifecycle-driven file movement:
+
+- named project work uses `02-Projects/Projects/<project>/`;
+- do not reintroduce `02-Projects/Active/` or `02-Projects/Completed/` as lifecycle roots;
+- website article source content uses `02-Projects/Workspaces/Website/Articles/`;
+- official social source content uses `02-Projects/Workspaces/Marketing/Social-Media/`;
+- `03-Records/Published/` is for actual publication evidence or an explicitly requested snapshot, not newly drafted source content;
+- publication or project completion does not itself require moving the editable source file.
+
+The temporary `migrate-lifecycle-neutral.py` tool exists only to migrate the deployed Vault from `02-Projects/Active/` to `02-Projects/Projects/`. Keep dry-run as the default, fail on destination collisions before moves, never bulk-relocate legacy `03-Records/Published/`, and remove the migration-only tool after the live migration is complete.
+
+Future changes must not restore lifecycle directories merely because a status label sounds intuitive. Any new movement-based lifecycle must pass the Human-Cost Gate and Architecture Change Gate.
+
 ## LLM Knowledge Engineering Guardrails
 
 When adding knowledge compilation, ingestion, identity resolution, citation, linking, or other LLM-assisted knowledge features, follow these rules:
