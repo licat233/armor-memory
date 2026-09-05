@@ -13,7 +13,7 @@ When creating or storing a persistent ARMOR Vault document:
 7. Ordinary writes are route -> write -> stop.
 8. Do not create new router enum values during ordinary work.
 
-## Active Architecture Precedence
+## Active Architecture Sources
 
 For current ARMOR Minimal Stable work, active rules are defined by:
 
@@ -22,9 +22,7 @@ For current ARMOR Minimal Stable work, active rules are defined by:
 3. `minimal-stable/00-System/`
 4. `.agent/skills/armor-memory/SKILL.md` and its current references
 
-Root-level documents that explicitly describe ARMOR Enterprise V7.2 or the pre-Minimal-Stable architecture are historical references only. In particular, do not import legacy V7.2 frontmatter, authority, lifecycle, review-queue, or promotion rules into Minimal Stable unless a current Minimal Stable document explicitly adopts them.
-
-When active and historical documents disagree, the active Minimal Stable documents above take precedence.
+The current repository tree should contain active architecture material only. Do not reintroduce superseded architecture documents, migration-only instructions, archived architecture copies, deprecated authority vocabularies, or obsolete lifecycle rules merely for reference. Use Git history when an explicit historical investigation requires them.
 
 ## Architecture Change Gate
 
@@ -67,3 +65,11 @@ When adding knowledge compilation, ingestion, identity resolution, citation, lin
 10. **Deterministic validation surrounds model judgment.** Where an LLM makes a semantic decision such as deduplication or entity matching, narrow the candidate set first when possible, validate the output afterward, and reject writes that violate deterministic invariants.
 
 These rules are design constraints, not a roadmap. They do not authorize new ingestion services, entity registries, vector databases, graphs, background pipelines, or other infrastructure by themselves. Each proposed capability must still pass the Architecture Change Gate.
+
+## Repository Hygiene
+
+- Keep the default branch focused on the active architecture.
+- Do not preserve obsolete architecture files in-tree solely because they may be historically interesting.
+- Do not create compatibility shims for retired architecture paths unless a current production dependency proves they are required.
+- Prefer Git history over an in-tree legacy archive.
+- If a retired component is no longer referenced by active code, tests, or operating procedures, deletion is preferred to deprecation scaffolding.

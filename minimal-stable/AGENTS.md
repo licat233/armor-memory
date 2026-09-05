@@ -18,14 +18,14 @@ Knowledge-quality rules:
 - Do not run quality scans automatically after ordinary reads or writes.
 - Keep uncertain duplicate/provenance findings advisory rather than turning heuristics into hard errors.
 - Prefer Python standard-library implementation while the current capability can be expressed reliably without a dependency.
-- Do not import historical V7.2 authority values into Minimal Stable diagnostics.
-- Current Minimal Stable authority values are `working`, `verified`, `canonical`, and `evidence`; knowledge without an explicit authority is treated as `working` during retrieval.
+- Current authority values are `working`, `verified`, `canonical`, and `evidence`; knowledge without an explicit authority is treated as `working` during retrieval.
+- Do not import deprecated authority vocabularies or retired lifecycle rules into current diagnostics.
 
 Testing:
 
 - Run: `python3 -m pytest minimal-stable/tests -v`
 - Focused knowledge-quality suite: `python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q`
-- Do not modify V7.2 while working in this directory.
+- Current tests cover routing, Agent integration, and knowledge quality.
 
 ## Minimal Stable Feature Rules
 
@@ -38,3 +38,9 @@ Testing:
 - Prefer reversible changes. A failed or removed optional subsystem must not damage or strand canonical knowledge.
 - For architecture changes, document the concrete need, simpler alternatives considered, new failure modes, maintenance burden, rollback path, and final benefit-versus-cost decision.
 - If the benefit is uncertain or merely speculative, default to `Not now`.
+
+## Repository Hygiene
+
+- Keep this directory focused on current Minimal Stable implementation and tests.
+- Do not retain migration-only scripts or tests after the migration they serve is permanently complete and no active dependency remains.
+- Do not keep superseded architecture copies beside current rules solely for reference; use Git history when historical inspection is explicitly required.

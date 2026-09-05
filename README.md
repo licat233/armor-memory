@@ -1,6 +1,6 @@
 # ARMOR Minimal Stable
 
-This repository is the implementation and maintenance layer for ARMOR's shared memory architecture. It stores the router, tests, documentation, migration tooling, and read-only knowledge-quality tooling. It does not store live ARMOR business memory.
+This repository is the implementation and maintenance layer for ARMOR's shared memory architecture. It stores the active router, tests, architecture documentation, Agent integration, and read-only knowledge-quality tooling. It does not store live ARMOR business memory.
 
 ## Identity
 
@@ -13,22 +13,18 @@ Shared Skill:
 
 Active Vault:
 /Users/licat/armor-vault
-
-Frozen Legacy Vault:
-/Users/licat/Obsidian-V7.2-Legacy
 ```
 
 The architecture name is `ARMOR Minimal Stable`.
 
-Do not call this system `V8.0`.
+Do not invent a numeric successor name for this architecture unless an explicit architecture decision establishes one.
 
 ## Current Status
 
 - Status: Production / Stable
-- Migration: Completed on 2026-07-28
 - Active Vault: `/Users/licat/armor-vault`
-- Legacy V7.2: Frozen and read-only
-- Last verified full-suite baseline before the knowledge-quality upgrade: `104 passed`
+- The current repository tree contains active Minimal Stable material only.
+- Superseded architecture material is intentionally excluded from the working tree; Git history is the historical record.
 - Knowledge-quality focused validation on 2026-09-05: `12 passed`
 
 ## Architecture Flow
@@ -46,12 +42,11 @@ ARMOR_VAULT_ROOT
 ```
 
 - The Shared Skill defines memory behavior and routing discipline.
-- The Router determines the destination path.
+- The Router determines destination paths.
 - Knowledge-quality checks are explicit, read-only diagnostics.
 - `ARMOR_VAULT_ROOT` resolves the active Vault location.
 - The Vault stores ARMOR business memory.
 - This repository stores architecture, code, tests, and maintenance tools.
-- The frozen V7.2 Vault is historical and read-only.
 
 ## Active Vault Structure
 
@@ -85,8 +80,8 @@ armor-vault/
 - Derived tools must not become a second authoritative store.
 - Business memory must not contain unrelated personal machine administration.
 - Bulk changes must be backed up, manifest-driven, and reversible.
-- Do not recreate V7.2 lifecycle architecture.
-- Do not call the system V8.0.
+- Obsolete architecture copies are not retained in the current repository tree.
+- Git history is used for explicit historical investigation instead of keeping deprecated instructions beside active rules.
 
 ## Routing
 
@@ -142,71 +137,42 @@ Knowledge-quality maintenance is explicit-only. Ordinary reads and writes remain
 
 ARMOR Minimal Stable does not perform automatic update discovery.
 
-Updates are explicitly initiated by the human operator.
-Agents do not check repository versions, Skill versions, CHANGELOG files,
-or update status during normal memory tasks.
+Updates are explicitly initiated by the human operator. Agents do not check repository versions, Skill versions, CHANGELOG files, or update status during normal memory tasks.
 
 Update process:
 
 1. The operator requests an update.
-2. The Agent reads the specific update instructions.
-3. Relevant files are backed up.
+2. The Agent reads the active architecture instructions.
+3. Relevant files are backed up when a change is destructive or broad.
 4. Approved changes are applied.
-5. Tests and Agent verification are run.
+5. Relevant tests and Agent verification are run.
 6. The operator reviews the result.
 
-Normal Agent sessions must not perform version checks.
-Normal memory operations must not read update metadata.
-No automatic update notification is required.
-No background update process is used.
-No Agent may silently self-update.
-
-`VERSION` and `CHANGELOG.md` may exist as human-facing release records, but ordinary memory work must not depend on them.
+Normal Agent sessions must not perform version checks. No background update process is used. No Agent may silently self-update.
 
 ## Development And Testing
 
 Run tests from the repository root:
 
 ```bash
-cd /Volumes/MacData/projects/AI-Agent-Memory-Architecture
 python3 -m pytest minimal-stable/tests -v
 ```
 
-The last previously verified full-suite baseline is `104 passed`.
+Current test areas are:
 
-For the knowledge-quality upgrade, the focused new suite was validated separately:
+- deterministic routing
+- Agent integration
+- read-only knowledge quality
+
+Focused knowledge-quality suite:
 
 ```bash
 python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q
 ```
 
-Result on 2026-09-05: `12 passed`.
+Validated on 2026-09-05: `12 passed`.
 
-Do not replace the full-suite baseline with an inferred total until the complete repository suite has actually been run in the real repository checkout.
-
-Run the full test suite after changes to routing, Vault path handling, Skill integration, migration tooling, or knowledge-quality behavior.
-
-## Backup And Rollback
-
-Final V7.2 archive:
-
-`/Users/licat/ARMOR-Migration-Backups/armor-v7.2-final-20260728-212459.tar.gz`
-
-SHA-256:
-
-`b646b7c56575f86d583bb7e1c1fddf412bce3b269be70945b0575502b87f90b6`
-
-Rollback guide:
-
-`/Users/licat/ARMOR-Migration-Reports/final-acceptance-20260728-172412/ROLLBACK-V7.2-FREEZE.md`
-
-Rollback must never overwrite `/Users/licat/armor-vault`.
-
-## Legacy Status
-
-`/Users/licat/Obsidian-V7.2-Legacy` remains frozen, read-only, and available only for historical verification or disaster recovery.
-
-It must not be used as the active ARMOR business-memory source.
+After structural repository cleanup or changes to routing, Vault path handling, Skill integration, or knowledge-quality behavior, run the complete current suite in the real repository checkout before recording a new full-suite baseline.
 
 ## Operational Rules
 
@@ -218,48 +184,47 @@ It must not be used as the active ARMOR business-memory source.
 - Store active work in Projects.
 - Store historical evidence in Records.
 - Run knowledge-quality checks only when explicitly requested.
-- Run tests after architectural changes.
-- Back up files before bulk changes.
+- Run relevant tests after architectural changes.
+- Back up files before broad or destructive changes.
 
 ### Do Not
 
-- Do not write to `/Users/licat/Obsidian-V7.2-Legacy`.
-- Do not restore V7.2 Hooks, Skill, or Router behavior.
-- Do not recreate `90-Drafts`, `93-Proposals`, or other V7.2 lifecycle roots.
+- Do not recreate superseded lifecycle roots, review queues, or authority vocabularies unless a new current requirement explicitly justifies them.
 - Do not add automatic update checks to normal Agent workflows.
 - Do not silently overwrite existing Vault files.
 - Do not treat diagnostic warnings as permission to modify canonical knowledge.
 - Do not mix personal machine maintenance into ARMOR business memory.
 - Do not rename the shared Skill away from `armor-memory`.
+- Do not keep obsolete architecture copies in the current tree merely for reference; use Git history when historical material is explicitly needed.
 
 ## Repository Layout
 
 ```text
+.agent/
 minimal-stable/
 minimal-stable/00-System/
 minimal-stable/scripts/
 minimal-stable/tests/
-shared/
-shared/frontmatter/
-shared/document-map/
+AGENTS.md
+CLAUDE.md
+HERMES.md
+README.md
+CHANGELOG.md
 ```
 
 `minimal-stable/scripts/`
-Router, migration utilities, and the read-only knowledge-quality tool.
+Router and read-only knowledge-quality tooling.
 
 `minimal-stable/tests/`
-Automated verification for routing, migration safety, Agent integration, and knowledge-quality behavior.
+Automated verification for routing, Agent integration, and knowledge-quality behavior.
 
-`shared/`
-Shared standards and templates retained by the architecture repository. Historical V7.2-oriented standards must not override active Minimal Stable rules.
+## History Policy
 
-## Migration History
+The current branch is an operational architecture tree, not an archive of every previous architecture generation.
 
-- 513 effective business files were migrated.
-- The old Vault was backed up and frozen.
-- Active V7.2 instructions and active path dependencies were reduced to zero.
-- Codex, Claude Code, and Hermes Agent all passed post-freeze verification.
-- Detailed reports are stored under `/Users/licat/ARMOR-Migration-Reports/`.
+Superseded architecture documents, migration-only tooling, old templates, and archived architecture copies are intentionally removed from the current tree once they are no longer operationally required. Git history remains available for explicit historical investigation or recovery.
+
+This reduces instruction ambiguity and prevents old rules from being mistaken for current policy by humans or Agents.
 
 ## Final Authority Statement
 
