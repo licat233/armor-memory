@@ -49,12 +49,36 @@ Additional rules:
 - Prefer extending existing ARMOR components over introducing a new subsystem.
 - Any architecture proposal that adds persistent infrastructure must state its benefit, operational cost, failure modes, rollback path, and why the existing system is insufficient.
 
+## Human-Cost Gate
+
+Human attention is a scarce operating resource. Every recurring human step must justify the risk it prevents or the material judgment it contributes.
+
+When designing or changing a workflow, ask:
+
+1. Does the human make a real business, authority, identity, scope, or risk judgment here?
+2. Or is the human merely changing metadata, moving files, repeating an approval, triaging a deterministic route, or performing cleanup the Agent can derive safely?
+3. Can the Agent complete the mechanical step in the same already-authorized task?
+4. Will this design create a recurring queue, folder, status field, or review chore that grows with document volume or team size?
+5. Is the human cost clearly justified by risk reduction?
+
+If a recurring human step is mechanical and does not materially reduce risk, remove it by default.
+
+Required principles:
+
+- Do not make humans maintain lifecycle folders, publication folders, or archive folders when the system can route deterministically.
+- Do not require manual status changes merely to keep metadata synchronized with an action the Agent already knows occurred.
+- Do not ask for duplicate confirmation when the current user instruction already authorizes the exact action.
+- Human approval remains necessary when material judgment is actually unresolved; it is not a ritual step that must be repeated after authority is already sufficient.
+- If an unresolved item is later clarified, the Agent should re-route and move it during the same task instead of creating a manual Inbox-cleanup obligation.
+- Prefer one-time Agent-executed migrations over permanent human-maintained lifecycle processes.
+- Avoid designs whose maintenance burden grows roughly in proportion to document count when the same outcome can be represented by stable routing, authority, or retrieval rules.
+
 ## LLM Knowledge Engineering Guardrails
 
 When adding knowledge compilation, ingestion, identity resolution, citation, linking, or other LLM-assisted knowledge features, follow these rules:
 
 1. **LLM proposes; deterministic code constrains.** Use LLMs for semantic extraction, comparison, summarization, and proposed edits. Use deterministic code for routing, identity boundaries, source resolution, validation, permissions, and final write mechanics.
-2. **Canonical changes must not be silently compiled.** An LLM-assisted knowledge compiler should normally end at a proposed diff or candidate update. Material changes to canonical knowledge still require the existing authority and human-approval boundary.
+2. **Canonical changes must not be silently compiled.** An LLM-assisted knowledge compiler should normally end at a proposed diff or candidate update unless the current instruction or an explicitly designated authoritative source already provides sufficient authority for the exact change. Material unresolved judgment still requires the authority boundary; duplicate confirmation does not.
 3. **Evidence must survive compilation.** Compiled knowledge should remain traceable to original source material. Prefer stable source references plus human-readable locators such as page, section, heading, or record path. Do not make canonical knowledge depend on ephemeral vector or chunk IDs that exist only in derived infrastructure.
 4. **Same is not the same as related.** Entity or concept merging must require evidence that two names identify the same thing, not merely similar or related things. When identity is uncertain, keep items separate and surface the ambiguity rather than merging aggressively.
 5. **Do not ask LLMs to reproduce high-entropy identifiers when avoidable.** If an LLM must refer to UUIDs, hashes, opaque resource IDs, long slugs, or similar durable identifiers, prefer short invocation-local handles and resolve them deterministically before persistence.
