@@ -1,9 +1,9 @@
 ---
 type: "system"
 status: "active"
-authority: "reference"
+authority: "canonical"
 created: "2026-07-27"
-updated: "2026-07-27"
+updated: "2026-09-05"
 ---
 
 # Routing Tests
