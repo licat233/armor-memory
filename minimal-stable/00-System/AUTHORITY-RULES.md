@@ -28,7 +28,32 @@ Draft is a status, not a top-level destination.
 
 A knowledge file without an explicit `authority` field is treated as `working`. Location inside `01-Knowledge/` does not by itself promote authority.
 
+`status` metadata is optional operational metadata. It must not become a recurring human-maintenance obligation. If a status change is useful and is directly implied by the task the Agent is already performing, the Agent should update it in the same operation rather than asking the human to maintain it manually.
+
 When several materials discuss the same mature topic, an explicit canonical Knowledge page is the default current-reference entry point. Project documents, Records, Research, and other supporting material do not become peer current-truth authorities merely because they discuss the same subject.
+
+## Human Involvement Boundary
+
+Human attention is reserved for material judgment, not file administration.
+
+A human decision is required when:
+
+- competing authoritative claims cannot be resolved from an already designated source;
+- identity, scope, meaning, or business intent remains materially ambiguous;
+- a canonical change lacks sufficient authority in the current instruction or source basis;
+- the action would make a material business decision that the Agent was not already authorized to make.
+
+Human action is not required merely to:
+
+- choose a deterministic destination already defined by the Router;
+- change routine status metadata;
+- move a file because a lifecycle label changed;
+- repeat approval already stated in the current instruction;
+- close a conflict after the human has already resolved it;
+- re-route a previously unresolved item after the user supplies the missing classification information;
+- perform mechanical cleanup that follows deterministically from an approved scoped task.
+
+The system should prefer one human decision that becomes durable over repeated future escalations of the same settled question.
 
 ## Knowledge Quality Diagnostics
 
@@ -56,14 +81,15 @@ The diagnostic must not:
 
 1. Read the current canonical document.
 2. Identify the exact proposed change and the relevant source or reviewer basis.
-3. Present the material change to the human before writing. When current and candidate files exist, use `armor-knowledge diff` to show the change.
-4. Obtain explicit approval for the authority-changing or material canonical edit.
+3. Determine whether authority is already sufficient. The user's current instruction counts as approval when it explicitly approves the exact change, resolves the conflict, or designates the conclusion as the current reference. An explicitly designated authoritative source may also provide sufficient authority for an unambiguous requested update.
+4. Ask the human only if a material judgment remains unresolved. Do not request duplicate confirmation.
 5. Update the document in its purpose-based location.
-6. Verify the change against the relevant source or reviewer.
+6. Verify the change against the relevant source or reviewer basis.
 7. Keep the updated file as the current canonical version in its local metadata or document note.
 8. Add a short changelog note describing what changed and why.
+9. If the update resolves a knowledge conflict, complete the scoped conflict-closure steps in the same task instead of leaving follow-up cleanup to the human.
 
-The diff helper is diagnostic only. It does not approve or apply changes.
+The diff helper is diagnostic only. It does not approve or apply changes by itself.
 
 ## Conflict Resolution And Closure
 
@@ -82,7 +108,7 @@ After an explicit resolution:
 
 A later Agent should rely on the closed current Knowledge unless materially new evidence reopens the issue.
 
-This rule is intended to make human judgment durable, not to authorize automatic canonical rewriting without approval.
+This rule is intended to make human judgment durable, not to authorize automatic canonical rewriting without sufficient authority.
 
 ## Topic Convergence
 
