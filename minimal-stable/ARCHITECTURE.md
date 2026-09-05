@@ -49,6 +49,8 @@ Website articles and official social copy each have one stable editable-content 
 
 Do not recreate `Active/`, `Completed/`, Draft, Review, or other lifecycle directory trees unless a future concrete requirement passes the Feature Admission Gate.
 
+The one-time live Vault migration to lifecycle-neutral project paths has been completed. Migration-only tooling is removed from the active tree after completion; Git history is sufficient for explicit historical recovery.
+
 ### Human-Cost Boundary
 
 Human attention is reserved for business judgment, unresolved authority, material ambiguity, or risk that cannot be resolved deterministically from the current instruction and sources.
@@ -383,26 +385,6 @@ The following remain `Not now` until a concrete ARMOR problem demonstrates that 
 
 These capabilities may be revisited individually through the Feature Admission Gate. They are not bundled into a future version by default.
 
-## Lifecycle-Neutral Migration Capability
-
-The routing change from `02-Projects/Active/` to `02-Projects/Projects/` is a bounded one-time filesystem migration. It is implemented by:
-
-```text
-scripts/migrate-lifecycle-neutral.py
-```
-
-Safety rules:
-
-- dry-run is the default;
-- `--apply` is required to mutate the Vault;
-- existing destination collisions fail before any project is moved;
-- when source and destination both exist without collisions, project entries are merged deterministically;
-- `03-Records/Published/` is explicitly preserved and never bulk-migrated by this tool.
-
-Published content is preserved because the older routing rule mixed true publication evidence with content merely created for publication. Bulk relocation could therefore rewrite historical meaning. New routing is corrected going forward instead of guessing the semantics of legacy records.
-
-Once the live Vault has been migrated and the tool is no longer operationally required, remove this migration-only script and its focused test from the active tree in accordance with repository hygiene rules.
-
 ## Required Deliverables
 
 This implementation includes:
@@ -414,10 +396,8 @@ This implementation includes:
 - `00-System/ROUTING-TESTS.md`
 - `scripts/armor-route.py`
 - `scripts/armor-knowledge.py`
-- `scripts/migrate-lifecycle-neutral.py` while the one-time live migration remains operational
 - `tests/test_armor_route.py`
 - `tests/test_armor_knowledge.py`
-- `tests/test_lifecycle_neutral_migration.py` while the migration remains operational
 
 ## Router Interface
 
