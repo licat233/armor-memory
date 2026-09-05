@@ -27,9 +27,11 @@ Examples:
 - checklist
 - landing page copy
 
-ARMOR website articles use `work-product + website + article`; the Router sends them directly to `03-Records/Published/Articles/`.
+ARMOR website articles use `work-product + website + article`; the Router sends them to the lifecycle-neutral content home `02-Projects/Workspaces/Website/Articles/`. A lifecycle change such as draft -> published does not move the working content file.
 
-Official social content uses `work-product + marketing + social-copy`; the Router sends it directly to `03-Records/Published/Social-Media/` whether or not `--project` is supplied. Official social content has one destination and no Workspace-to-Published move/copy lifecycle. Temporary or internal social exploration stays in Workspaces under other classifications.
+Official social content uses `work-product + marketing + social-copy`; the Router sends it to `02-Projects/Workspaces/Marketing/Social-Media/`. Official social content has one stable content destination and no Workspace-to-Published move/copy lifecycle.
+
+`03-Records/Published/` is for evidence of an actual publication event or an explicitly requested published snapshot, not for newly created content merely intended for publication.
 
 ### `record`
 
@@ -45,6 +47,8 @@ Examples:
 - published-content snapshot
 
 A proposal written after a meeting is a `work-product`. The meeting transcript itself is a `record`.
+
+An actually published page/post snapshot is a `record`. The editable source content remains a `work-product` in its stable content home.
 
 ### `knowledge`
 
@@ -77,9 +81,13 @@ Unverified content is not automatically unresolved.
 
 ## Project Priority
 
-If an explicit active project exists and the object is a `work-product`, include `--project`.
+If an explicit project exists and the object is a `work-product`, include `--project` when it is part of the task context.
+
+Named project work routes under `02-Projects/Projects/<project>/` for artifacts whose operational home is project-scoped. Website articles and official social copy deliberately keep one lifecycle-neutral channel-content home even when `--project` is supplied; the Router still validates the project value for safety.
 
 Do not send records, knowledge, or research into a project unless the router explicitly supports it.
+
+Project completion does not require moving the project tree to another lifecycle directory.
 
 ## Entity Usage
 
