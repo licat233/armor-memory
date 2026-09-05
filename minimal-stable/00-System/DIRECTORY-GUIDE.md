@@ -34,7 +34,7 @@ Recommended substructure:
 └── Insights/
 
 02-Projects/
-├── Active/
+├── Projects/
 └── Workspaces/
 
 03-Records/
@@ -54,10 +54,10 @@ Recommended substructure:
 
 Directory location represents operational purpose, not lifecycle status.
 
-`02-Projects/Completed/` is not part of the recommended structure. Project completion must not create a recurring human obligation to move an entire project tree merely to express that its lifecycle changed.
+`02-Projects/Projects/` is the stable home for named project work. A project remains there when it starts, pauses, completes, or is revisited. Do not create `Active/` and `Completed/` lifecycle roots that require humans or Agents to move project trees as status changes.
 
-`02-Projects/Active/` remains the current Router path for named projects for compatibility with the deployed Minimal Stable layout. Its name must not be interpreted as requiring a later move to `Completed/`.
+`02-Projects/Workspaces/` is the stable home for persistent domain/entity work that is not scoped to one named project. Website articles and official social copy use lifecycle-neutral channel-content homes under Workspaces.
 
-If the `Active/` naming itself becomes operationally confusing, replacing it with a lifecycle-neutral project root should be handled as a one-time migration with the Router and live Vault changed together. Do not create parallel old/new project roots during normal operation.
+`03-Records/Published/` stores evidence of publication events or explicitly requested published snapshots. Editable article/social source content does not move there merely because it becomes published.
 
 Status metadata is optional and should be Agent-maintained when useful. Humans should not be assigned routine status, move, or archive chores merely to keep the directory tree cosmetically synchronized with lifecycle state.
