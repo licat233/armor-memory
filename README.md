@@ -26,6 +26,7 @@ Do not invent a numeric successor name for this architecture unless an explicit 
 - The current repository tree contains active Minimal Stable material only.
 - Superseded architecture material is intentionally excluded from the working tree; Git history is the historical record.
 - Knowledge-quality focused validation on 2026-09-05: `12 passed`
+- Lifecycle-neutral routing is now the current architecture; the one-time live Vault path migration remains operational until executed locally.
 
 ## Architecture Flow
 
@@ -55,6 +56,8 @@ armor-vault/
 ├── 00-System/
 ├── 01-Knowledge/
 ├── 02-Projects/
+│   ├── Projects/
+│   └── Workspaces/
 ├── 03-Records/
 ├── 04-Research/
 ├── 90-Inbox/
@@ -63,16 +66,18 @@ armor-vault/
 
 - `00-System/`: system rules, start points, and operational guidance
 - `01-Knowledge/`: canonical business knowledge and reusable facts
-- `02-Projects/`: named projects and persistent workspaces
-- `03-Records/`: published records, meetings, journals, and communications
+- `02-Projects/Projects/`: stable home for named project work; no Active -> Completed move lifecycle
+- `02-Projects/Workspaces/`: stable home for persistent domain/entity work and channel-content sources
+- `03-Records/`: evidence of events, publications, meetings, journals, and communications
 - `04-Research/`: notes and source collections for ongoing investigation
 - `90-Inbox/`: explicitly unresolved material only
-- `99-Archive/`: inactive Minimal Stable material retained for reference
+- `99-Archive/`: inactive material retained only when preserving history/reference is useful
 
 ## Core Principles
 
 - Minimal structure over lifecycle complexity.
 - Object type determines location.
+- Directory location represents operational purpose, not lifecycle state.
 - Draft and Proposal are statuses, not permanent root directories.
 - Projects and canonical Knowledge remain separate.
 - Skill controls behavior; Vault stores business memory.
@@ -82,7 +87,7 @@ armor-vault/
 - Do not require repeated human approval when the current instruction already authorizes the exact change.
 - Do not create recurring human-maintained lifecycle queues or folder-move chores when stable routing or metadata can represent the same outcome.
 - Business memory must not contain unrelated personal machine administration.
-- Bulk changes must be backed up, manifest-driven, and reversible.
+- Bulk changes must be bounded, checked for conflicts, and reversible when practical.
 - Obsolete architecture copies are not retained in the current repository tree.
 - Git history is used for explicit historical investigation instead of keeping deprecated instructions beside active rules.
 
@@ -93,6 +98,60 @@ ARMOR Minimal Stable should minimize recurring human operating cost as document 
 Human involvement is justified when the system needs a real business decision, unresolved authority judgment, identity/scope clarification, or approval not already granted. Humans should not be assigned routine work such as choosing deterministic destinations, manually synchronizing status fields, repeatedly confirming an already-approved change, moving files between lifecycle folders, or cleaning Inbox items after the missing classification has already been supplied.
 
 Prefer a one-time Agent-executed migration over a permanent human-maintained process when a directory or workflow design creates lifecycle housekeeping.
+
+## Lifecycle-Neutral Routing
+
+Current stable routing rules include:
+
+```text
+Named project work
+-> 02-Projects/Projects/<project>/
+
+Website article source
+-> 02-Projects/Workspaces/Website/Articles/
+
+Official social-copy source
+-> 02-Projects/Workspaces/Marketing/Social-Media/
+
+Actual publication evidence / requested snapshot
+-> 03-Records/Published/
+```
+
+Website articles and official social copy each have one stable editable-source location. Draft, review, publication, update, or retirement status does not require moving the source file.
+
+`03-Records/Published/` is an evidence layer. Do not route a newly written article or social post there merely because it is intended to be published.
+
+## One-Time Live Vault Migration
+
+The old named-project root was:
+
+```text
+02-Projects/Active/
+```
+
+The current root is:
+
+```text
+02-Projects/Projects/
+```
+
+The temporary migration helper is:
+
+```bash
+python3 minimal-stable/scripts/migrate-lifecycle-neutral.py --vault /Users/licat/armor-vault
+```
+
+That command is dry-run only. Apply only after reviewing the plan:
+
+```bash
+python3 minimal-stable/scripts/migrate-lifecycle-neutral.py \
+  --vault /Users/licat/armor-vault \
+  --apply
+```
+
+The helper fails before moving projects when destination name collisions exist. It does not bulk-migrate `03-Records/Published/` because legacy routing mixed true publication evidence with content merely created for publication; guessing would risk rewriting historical meaning.
+
+After the live Vault migration is completed and verified, remove this temporary migration helper and its focused test from the active tree.
 
 ## Routing
 
@@ -174,16 +233,18 @@ Current test areas are:
 - deterministic routing
 - Agent integration
 - read-only knowledge quality
+- temporary lifecycle-neutral migration safety
 
-Focused knowledge-quality suite:
+Focused suites:
 
 ```bash
 python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q
+python3 -m pytest minimal-stable/tests/test_lifecycle_neutral_migration.py -q
 ```
 
-Validated on 2026-09-05: `12 passed`.
+Knowledge-quality validation recorded earlier on 2026-09-05: `12 passed`.
 
-After structural repository cleanup or changes to routing, Vault path handling, Skill integration, or knowledge-quality behavior, run the complete current suite in the real repository checkout before recording a new full-suite baseline.
+Do not record a new full-suite baseline until the complete current suite has actually run in a real repository checkout or CI.
 
 ## Operational Rules
 
@@ -192,23 +253,25 @@ After structural repository cleanup or changes to routing, Vault path handling, 
 - Write new ARMOR memory only to `/Users/licat/armor-vault`.
 - Use the shared Skill and Router.
 - Keep Knowledge stable and reusable.
-- Store active work in Projects.
-- Store historical evidence in Records.
+- Keep named project work in `02-Projects/Projects/<project>/` without lifecycle moves.
+- Keep article/social source content in their lifecycle-neutral Workspaces homes.
+- Store publication snapshots and historical evidence in Records.
 - Let the Agent perform deterministic routing, already-authorized metadata updates, scoped conflict closure, and resolved-Inbox re-routing.
 - Run knowledge-quality checks only when explicitly requested.
 - Run relevant tests after architectural changes.
-- Back up files before broad or destructive changes.
+- Check for collisions before broad filesystem migrations.
 
 ### Do Not
 
-- Do not recreate superseded lifecycle roots, review queues, or authority vocabularies unless a new current requirement explicitly justifies them.
+- Do not recreate `Active/`, `Completed/`, or other lifecycle project roots.
+- Do not route newly created article/social source content directly to `03-Records/Published/`.
 - Do not require humans to maintain status fields or move files solely because lifecycle state changed.
 - Do not ask for duplicate approval already contained in the current instruction.
 - Do not add automatic update checks to normal Agent workflows.
 - Do not silently overwrite existing Vault files without sufficient authority.
 - Do not treat diagnostic warnings as permission to modify canonical knowledge.
 - Do not mix personal machine maintenance into ARMOR business memory.
-- Do not rename the shared Skill away from `armor-memory`.
+- Do not rename the shared Skill away from `armor-memory` until a separate naming decision is explicitly made.
 - Do not keep obsolete architecture copies in the current tree merely for reference; use Git history when historical material is explicitly needed.
 
 ## Repository Layout
@@ -227,16 +290,16 @@ CHANGELOG.md
 ```
 
 `minimal-stable/scripts/`
-Router and read-only knowledge-quality tooling.
+Router, read-only knowledge-quality tooling, and temporary bounded migration tooling while an active migration is still pending.
 
 `minimal-stable/tests/`
-Automated verification for routing, Agent integration, and knowledge-quality behavior.
+Automated verification for routing, Agent integration, knowledge-quality behavior, and active migration safety.
 
 ## History Policy
 
 The current branch is an operational architecture tree, not an archive of every previous architecture generation.
 
-Superseded architecture documents, migration-only tooling, old templates, and archived architecture copies are intentionally removed from the current tree once they are no longer operationally required. Git history remains available for explicit historical investigation or recovery.
+Superseded architecture documents, completed migration-only tooling, old templates, and archived architecture copies are intentionally removed from the current tree once they are no longer operationally required. Git history remains available for explicit historical investigation or recovery.
 
 This reduces instruction ambiguity and prevents old rules from being mistaken for current policy by humans or Agents.
 
