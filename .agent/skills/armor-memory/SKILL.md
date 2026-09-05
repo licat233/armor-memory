@@ -29,6 +29,7 @@ Do not use it for:
 4. Exclude Records, Inbox, and Archive unless the task requires evidence, unresolved material, audit, or history.
 5. Expand to the full ARMOR Vault only after the scoped search fails, and state why; this does not mean switching to Web search.
 6. Treat search results as candidates; determine authority from `00-System/AUTHORITY-RULES.md` and the underlying files.
+7. When multiple files discuss the same mature topic, prefer an explicit canonical Knowledge entry as the default current-truth entry point. Supporting project, record, or research documents are not peer current-truth authorities merely because they mention the same topic.
 
 ## Retrieval authority rules
 
@@ -92,6 +93,70 @@ bash scripts/knowledge.sh diff <current.md> <candidate.md>
 
 The diff helper is read-only. Human approval remains the authority gate; the tool does not approve or apply the change.
 
+## Explicit knowledge compilation workflow
+
+Knowledge compilation is an explicit Agent workflow, not a background process or standalone service.
+
+Use it when the user explicitly asks to turn source material into reusable ARMOR knowledge, consolidate a mature topic, resolve conflicting knowledge, make a conclusion the current reference, or otherwise converge multiple materials into current Knowledge.
+
+Do not trigger it merely because an ordinary project, record, article, social post, research note, or conversation was created.
+
+### Compilation steps
+
+1. Scope the source material named by the user. Treat Records and Research as evidence, not current truth.
+2. Extract only reusable claims or conclusions that merit long-term Knowledge. Do not create Knowledge merely to summarize every source document.
+3. Classify the candidate using the current supported `knowledge-type` vocabulary.
+4. If the candidate cannot be represented accurately by the current Router vocabulary, report `Router vocabulary gap` and stop before inventing a new enum or forcing the material into the nearest category.
+5. Search the relevant `01-Knowledge/` scope for an existing current target before proposing a new page.
+6. Compare the candidate material with the best current target and return one of these semantic outcomes:
+   - `NOOP` — current Knowledge already expresses the same material conclusion.
+   - `CREATE` — reusable Knowledge is warranted and no suitable current target exists.
+   - `UPDATE` — the source adds or changes material Knowledge without unresolved contradiction.
+   - `CONFLICT` — current Knowledge and new evidence materially disagree.
+   - `AMBIGUOUS` — identity, target, meaning, scope, or authority cannot be resolved reliably.
+7. Preserve provenance using stable source references and human-readable locators when available.
+8. For `CREATE` or `UPDATE`, prepare the smallest useful candidate change. New Knowledge defaults to `working` unless it is explicitly verified or approved under the authority rules.
+9. For a material canonical change, stop at a proposed diff until the required human approval is obtained.
+10. For `CONFLICT` or `AMBIGUOUS`, do not improvise a resolution. Surface the exact competing claims, their authority/provenance, and the decision required.
+
+### Conflict closure
+
+A human answer that resolves a knowledge conflict is not merely a chat answer. It is authority input for closing that conflict in current Knowledge.
+
+After the human explicitly resolves a conflict:
+
+1. Apply the approved resolution to the intended current Knowledge target.
+2. Preserve relevant provenance and add the required short changelog for material verified/canonical changes.
+3. Search the same relevant `01-Knowledge/` scope for other current Knowledge that still presents the rejected claim as current truth.
+4. Converge those competing current claims so the same resolved conflict does not remain active for the next Agent. Do not silently discard distinct valid knowledge while doing so.
+5. Do not rewrite `03-Records/`, `04-Research/`, historical published records, or other evidence merely to make history match the new current conclusion.
+6. If competing current Knowledge cannot be safely reconciled because identity or scope remains uncertain, report that closure is incomplete instead of pretending the conflict is solved.
+
+A resolved conflict should not be escalated to a human again unless materially new evidence reopens the question.
+
+### Topic convergence
+
+Multiple documents may legitimately discuss the same topic, but mature reusable knowledge should provide one default current-knowledge entry point when that materially reduces ambiguity and repeated reading cost.
+
+When explicitly asked to consolidate a mature topic:
+
+1. Treat project documents, model-generated discussion documents, Records, and Research as supporting material unless they independently have explicit Knowledge authority.
+2. Find an existing canonical or best current Knowledge entry before creating another page.
+3. Compile the current ARMOR conclusion, not a transcript-style summary of what every source said.
+4. Preserve unresolved questions as unresolved; do not fabricate consensus.
+5. Prefer one canonical current entry when the topic has a settled ARMOR position. Supporting documents remain evidence/history and should not compete as default current truth.
+6. Do not create a canonical topic page for every casual discussion. Convergence is warranted when the topic is reusable, repeatedly queried, supported by multiple materials, operationally important, or has produced recurring ambiguity/conflict.
+
+The purpose of topic convergence is to reduce how many documents a human or Agent must read to know ARMOR's current position. It is not a license to generate more summaries, indexes, or lifecycle layers.
+
+### Compilation boundaries
+
+- Knowledge compilation does not authorize a new database, vector store, graph store, queue, background daemon, MCP server, or separate Knowledge Compiler service.
+- The LLM performs semantic extraction, comparison, ambiguity detection, and proposal drafting; deterministic routing and authority rules still control persistence boundaries.
+- Do not introduce Proposal folders, Review Queues, Draft Wiki roots, or other lifecycle directories for this workflow.
+- Retirement/archive mechanics for redundant current Knowledge are a separate lifecycle-maintenance concern; do not invent an ad hoc storage path during compilation.
+- Knowledge compilation is an explicit exception to ordinary route -> write -> stop only for the scoped convergence task the user requested. Do not turn it into hidden Vault-wide maintenance.
+
 ## Mandatory rules
 
 - Full-Vault search is a fallback, not the first retrieval action.
@@ -103,6 +168,8 @@ The diff helper is read-only. Human approval remains the authority gate; the too
 - Draft is a status, not a destination.
 - Do not run extra memory-maintenance operations after an ordinary write.
 - Knowledge-quality tools are diagnostic and read-only; never treat a warning as permission to modify canonical knowledge.
+- Do not leave a human-resolved contradiction active in current Knowledge when the explicit task is conflict resolution or knowledge convergence.
+- Do not rewrite evidence/history merely to make it agree with current Knowledge.
 
 ## Canonical knowledge
 
