@@ -13,13 +13,16 @@ Rules:
 - knowledge defaults to `working` unless verified
 - `canonical` requires explicit user approval or an explicitly designated authoritative source
 - canonical content must not be silently overwritten
+- do not ask for a second approval when the user's current instruction already explicitly approves the exact change, resolves the conflict, or designates the conclusion as the current reference
+- an explicitly designated authoritative source may satisfy the authority basis when the requested update is unambiguous; do not add a redundant human confirmation solely because the target is canonical
+- ask the human only when a material judgment remains unresolved, competing authoritative claims remain, identity/scope is ambiguous, or the requested action would exceed the authority already granted
 
 ## Authority during retrieval
 
 - Read the file's explicit `authority` field. Do not infer authority from other
   metadata.
-- `status: active` means the file is in current use; it is not an authority
-  level.
+- `status` is optional lifecycle metadata. It does not create authority and must
+  not become a recurring human-maintenance obligation.
 - `revision`, `source_quality`, `write_policy`, `type`, and folder location are
   supporting metadata, not substitutes for `authority`.
 - A knowledge file without explicit `authority` remains `working`.
@@ -32,9 +35,11 @@ Rules:
 Before changing canonical content:
 
 1. Read current content.
-2. Identify the exact change.
-3. Obtain explicit approval.
-4. Update the file.
-5. Add a short changelog entry.
+2. Identify the exact change and its source/reviewer basis.
+3. Determine whether approval is already present in the user's current instruction or through an explicitly designated authoritative source.
+4. Ask for human approval only if the material judgment is still unresolved.
+5. Update the file once the authority basis is sufficient.
+6. Add a short changelog entry for a material change.
+7. If the change resolves a conflict, complete the scoped conflict-closure workflow in the same task instead of leaving cleanup to the human.
 
 Do not add Proposal files or Review Queues to the default workflow.
