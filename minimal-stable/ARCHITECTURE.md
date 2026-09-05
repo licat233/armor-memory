@@ -92,6 +92,165 @@ When solving a new knowledge-system requirement, prefer this order:
 
 Correctness, recoverability, and long-term knowledge integrity take priority over feature count.
 
+## Knowledge Compilation And Ingestion Boundaries
+
+These rules govern future LLM-assisted knowledge compilation, document ingestion, entity resolution, citation, and related features. They define safety and architecture boundaries; they are not a requirement to build those capabilities now.
+
+### Responsibility Split
+
+Use each layer for the job it can perform reliably:
+
+```text
+LLM
+  -> semantic extraction
+  -> summarization
+  -> comparison
+  -> ambiguity detection
+  -> proposed edits
+
+Deterministic code
+  -> routing
+  -> identity constraints
+  -> source resolution
+  -> validation
+  -> permissions
+  -> durable identifier mapping
+  -> write mechanics
+
+Human authority
+  -> approval of material canonical changes
+```
+
+Do not move deterministic integrity responsibilities into prompts merely because an LLM can usually follow the instruction.
+
+A future knowledge compiler should normally produce a candidate update or proposed diff. It must not silently rewrite canonical knowledge merely because the compiler believes the new material is better or newer.
+
+### Evidence-Preserving Compilation
+
+Compiled knowledge must remain traceable to the source material that supports it.
+
+Prefer provenance that remains understandable without a derived database, for example:
+
+```text
+source document or record path
++
+page / section / heading / stable locator
+```
+
+A derived search or retrieval layer may maintain chunk identifiers internally, but canonical Markdown should not depend on ephemeral vector-store IDs, database row IDs, or regenerated chunk UUIDs unless a future architecture decision explicitly establishes a durable identity contract for them.
+
+If deleting and rebuilding an index would break the meaning or verifiability of canonical knowledge, the index has crossed the source-of-truth boundary and must be redesigned or explicitly justified.
+
+### Entity Identity And Deduplication
+
+Knowledge systems must distinguish identity from similarity.
+
+```text
+same entity / same concept
+!=
+related entity / related concept
+```
+
+A merge is more dangerous than a duplicate because a false merge can silently combine facts from different products, versions, companies, standards, customers, or concepts.
+
+Therefore:
+
+- prefer conservative merging;
+- use names and aliases as evidence, not proof by themselves;
+- narrow candidate matches with cheap deterministic signals before asking an LLM for semantic judgment when practical;
+- validate model-selected merge targets against deterministic invariants afterward;
+- reject cross-type or otherwise impossible merges in code;
+- when identity remains uncertain, preserve separate items and expose the ambiguity for review.
+
+Do not introduce a permanent entity registry, graph database, or identity service only to satisfy this principle. Start with the smallest representation that solves a demonstrated ARMOR problem.
+
+### Durable IDs And Model Handles
+
+High-entropy identifiers are poor model-facing interfaces.
+
+When an LLM must refer to values such as:
+
+- UUIDs;
+- hashes;
+- opaque resource IDs;
+- long generated slugs;
+- internal chunk IDs;
+- storage URLs with opaque tokens;
+
+prefer an invocation-local low-entropy handle such as `ref-1` or `c001`, then resolve the handle back to the durable value using deterministic code before persistence.
+
+Temporary handles are transport aids only. They must not become stored business identifiers or a second identity layer.
+
+### Ingestion Boundary
+
+Document ingestion should normalize external formats into a simple intermediate representation rather than turn `armor-memory` into a monolithic parsing platform.
+
+Preferred conceptual boundary:
+
+```text
+PDF / DOCX / XLSX / PPTX / Web / other source
+                    ↓
+             parser adapter
+                    ↓
+       normalized Markdown + source metadata
+                    ↓
+       ARMOR knowledge workflow
+```
+
+Parsing, OCR/VLM, image handling, chunking, retrieval indexing, semantic compilation, and canonical storage are separate responsibilities. They may be composed when a real need exists, but they should not become one mandatory subsystem by default.
+
+When ingestion becomes necessary:
+
+1. prefer mature parsers and conversion tools behind thin adapters;
+2. support fallback or parser selection where source formats materially differ;
+3. preserve the original source or a durable source reference;
+4. keep parser-specific metadata from becoming canonical knowledge schema unless needed;
+5. avoid building ARMOR-specific PDF, Office, OCR, or web parsers unless existing tools demonstrably fail ARMOR's recurring inputs.
+
+### Source Trust Boundary
+
+Ingested source content is untrusted data.
+
+A PDF, web page, customer file, supplier document, email, or extracted hidden-text layer may contain:
+
+- prompt-like instructions;
+- invisible or malformed text;
+- OCR garbage;
+- stale facts;
+- malicious content;
+- misleading metadata.
+
+Source content must never override repository rules, system instructions, authority rules, or write policy. Parsers and compilers should treat source text as evidence to analyze, not instructions to execute.
+
+### Deterministic Guardrails Around LLM Decisions
+
+For semantic operations such as deduplication, entity matching, citation assignment, or knowledge updates, prefer this pattern when practical:
+
+```text
+cheap deterministic narrowing
+          ↓
+LLM semantic judgment
+          ↓
+deterministic validation
+          ↓
+proposal / safe write boundary
+```
+
+This reduces both hallucinated choices and unnecessary model context without requiring a heavy knowledge platform.
+
+### External Project Learning Rule
+
+Mature systems may demonstrate solutions that are useful as patterns without being appropriate dependencies for ARMOR.
+
+When studying systems such as LLM Wiki, WeKnora, RAG platforms, or enterprise search products:
+
+- extract the underlying problem and design principle first;
+- identify which complexity exists because those systems serve multi-tenant or large-scale workloads;
+- do not copy queues, databases, revision systems, graphs, services, or permission layers when Git, Markdown, local scripts, or existing ARMOR rules already solve the ARMOR-scale problem;
+- adopt the smallest useful mechanism only after it passes the Feature Admission Gate.
+
+These knowledge-engineering principles do not authorize a roadmap. In particular, they do not by themselves justify document-ingestion services, entity registries, semantic search, vector databases, graph stores, Redis, background compilation, MCP servers, or automatic canonical updates.
+
 ## Knowledge Quality Capability
 
 The first post-routing capability added to Minimal Stable is intentionally narrow: read-only knowledge-quality diagnostics.
