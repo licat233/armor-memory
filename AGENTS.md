@@ -66,6 +66,24 @@ When adding knowledge compilation, ingestion, identity resolution, citation, lin
 
 These rules are design constraints, not a roadmap. They do not authorize new ingestion services, entity registries, vector databases, graphs, background pipelines, or other infrastructure by themselves. Each proposed capability must still pass the Architecture Change Gate.
 
+## Knowledge Convergence Guardrails
+
+Knowledge compilation and convergence solve a recurring ARMOR problem: many materials can describe the same topic while current truth must remain clear.
+
+When developing or changing this capability:
+
+- Treat Knowledge compilation as an explicit Agent workflow first. Do not create a standalone compiler service while the existing Agent + Skill + Vault model is sufficient.
+- A human-resolved conflict must become durable current Knowledge so the same settled question is not repeatedly escalated. New materially relevant evidence may reopen it.
+- Conflict closure applies to current Knowledge. Do not rewrite Records, Research, or historical published evidence merely to make history agree with the latest conclusion.
+- Multiple source and working documents may coexist, but mature topics should have one default current-knowledge entry point when doing so materially reduces ambiguity and reading cost.
+- Topic convergence should compile ARMOR's current conclusion, not create another summary of every source's opinion.
+- Do not create Knowledge pages for every conversation. Require reusable or recurring value, operational importance, multiple supporting materials, or demonstrated ambiguity/conflict.
+- If a candidate cannot be represented accurately by the current Router vocabulary, report a `Router vocabulary gap`; do not silently add enums or force the item into the nearest category.
+- Keep conflict closure and topic convergence explicit and scoped. Do not add background Vault-wide rewriting, auto-canonicalization, or silent document retirement.
+- Retirement/archive mechanics are a separate lifecycle-maintenance concern and must not be improvised as part of compilation.
+
+These guardrails do not authorize new lifecycle directories, review queues, vector search, graph storage, entity registries, or background maintenance.
+
 ## Repository Hygiene
 
 - Keep the default branch focused on the active architecture.
