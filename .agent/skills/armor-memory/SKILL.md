@@ -79,9 +79,13 @@ Do not require humans to move files merely because a lifecycle state changed. Di
 6. If this task resolves the classification of a previously unresolved Vault item, re-route and move that item to the returned destination in the same task. Do not leave a manual Inbox cleanup step for the human.
 7. Stop.
 
-官网文章仍按 `work-product + website + article` 分类；Router 会直接返回唯一文章目录 `03-Records/Published/Articles/`。
+ARMOR website articles use `work-product + website + article` and always route to the lifecycle-neutral content home `02-Projects/Workspaces/Website/Articles/`, whether or not `--project` is supplied.
 
-官方社媒内容按 `work-product + marketing + social-copy` 分类；Router 始终返回唯一目录 `03-Records/Published/Social-Media/`，无论是否提供 `--project`。官方社媒内容只有一个目的地，没有 Workspace 到 Published 的移动/复制生命周期。临时或内部探索内容归入 Workspaces 下的其他分类。
+Official social content uses `work-product + marketing + social-copy` and always routes to `02-Projects/Workspaces/Marketing/Social-Media/`, whether or not `--project` is supplied. Article and social-copy files do not move merely because their lifecycle state changes.
+
+`03-Records/Published/` is for evidence of an actual publication event or an explicitly requested published snapshot. Do not place newly drafted channel content there merely because it is intended for publication.
+
+Named project work that uses project-scoped routing lives under `02-Projects/Projects/<project>/`. Project completion does not require moving the project tree.
 
 ## Explicit knowledge quality workflow
 
