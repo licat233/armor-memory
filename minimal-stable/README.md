@@ -13,10 +13,20 @@ Start with:
 
 Core implementation:
 
-- `scripts/armor-route.py` — deterministic destination routing
+- `scripts/armor-route.py` — deterministic lifecycle-neutral destination routing
 - `scripts/armor-knowledge.py` — read-only knowledge-quality checks and diff preview
-- `tests/` — routing, Agent integration, and knowledge-quality tests
+- `scripts/migrate-lifecycle-neutral.py` — temporary dry-run-first migration for `02-Projects/Active/ -> 02-Projects/Projects/`
+- `tests/` — routing, Agent integration, knowledge-quality, and active migration-safety tests
+
+Current routing principles:
+
+- named project work lives under `02-Projects/Projects/<project>/` without Active/Completed lifecycle moves;
+- website article source content lives under `02-Projects/Workspaces/Website/Articles/`;
+- official social source content lives under `02-Projects/Workspaces/Marketing/Social-Media/`;
+- `03-Records/Published/` stores actual publication evidence or explicitly requested snapshots.
 
 Knowledge-quality maintenance is explicit-only. It does not run automatically after ordinary Vault reads or writes and does not modify canonical knowledge.
+
+The lifecycle-neutral migration tool is temporary active tooling. Remove it and its focused test after the live Vault migration is complete and verified.
 
 Superseded architecture material is not retained in the current tree. Use Git history only when an explicit historical investigation is required.
