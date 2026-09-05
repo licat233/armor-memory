@@ -10,6 +10,12 @@ Routing rules:
 - Do not add implicit Inbox fallbacks.
 - Do not silently accept unknown values.
 - Every new enum or route requires documentation and tests.
+- Directory paths represent operational purpose, not lifecycle state.
+- Named project work uses `02-Projects/Projects/<project>/`; do not reintroduce `Active/` or `Completed/` lifecycle roots.
+- Website article source content uses `02-Projects/Workspaces/Website/Articles/`.
+- Official social source content uses `02-Projects/Workspaces/Marketing/Social-Media/`.
+- `03-Records/Published/` is publication evidence/snapshot storage, not the editable source-content lifecycle.
+- Project completion or content publication must not create a routine move requirement.
 
 Knowledge-quality rules:
 
@@ -21,11 +27,20 @@ Knowledge-quality rules:
 - Current authority values are `working`, `verified`, `canonical`, and `evidence`; knowledge without an explicit authority is treated as `working` during retrieval.
 - Do not import deprecated authority vocabularies or retired lifecycle rules into current diagnostics.
 
+Lifecycle-neutral migration rules:
+
+- `migrate-lifecycle-neutral.py` is a bounded one-time migration tool for `02-Projects/Active/ -> 02-Projects/Projects/`.
+- Dry-run must remain the default; `--apply` is required for mutation.
+- Destination collisions must fail before moves begin.
+- Do not bulk-migrate `03-Records/Published/`; legacy publication paths have mixed historical semantics under the old router.
+- Remove the migration script and focused migration test after the live Vault migration is complete and no active dependency remains.
+
 Testing:
 
 - Run: `python3 -m pytest minimal-stable/tests -v`
 - Focused knowledge-quality suite: `python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q`
-- Current tests cover routing, Agent integration, and knowledge quality.
+- Focused lifecycle-migration suite: `python3 -m pytest minimal-stable/tests/test_lifecycle_neutral_migration.py -q`
+- Current tests cover routing, Agent integration, knowledge quality, and the temporary lifecycle-neutral migration.
 
 ## Minimal Stable Feature Rules
 
