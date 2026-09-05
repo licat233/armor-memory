@@ -17,7 +17,52 @@ Its purpose is not to classify free-form language. Its purpose is to map structu
 2. Unknown enum values fail immediately through `argparse choices=`.
 3. Missing required fields fail immediately.
 4. `90-Inbox/` is reachable only through explicit `--object unresolved`.
-5. Routing is based on operational purpose, not truth status.
+5. Routing is based on operational purpose, not truth status or lifecycle state.
+6. Directory design should minimize recurring human maintenance as document volume and team size grow.
+
+## Lifecycle-Neutral Routing
+
+Lifecycle state should not force routine file movement.
+
+Current project/content rules are:
+
+```text
+Named project work
+-> 02-Projects/Projects/<project>/
+
+Persistent non-project work
+-> 02-Projects/Workspaces/
+
+Website article source
+-> 02-Projects/Workspaces/Website/Articles/
+
+Official social-copy source
+-> 02-Projects/Workspaces/Marketing/Social-Media/
+
+Actual publication evidence / requested snapshot
+-> 03-Records/Published/
+```
+
+`02-Projects/Projects/` is lifecycle-neutral. A project is not moved merely because it becomes active, paused, completed, or revisited.
+
+Website articles and official social copy each have one stable editable-content home. Draft, review, publication, update, or retirement status does not move the source file. `03-Records/Published/` represents an event/evidence layer, not the editable source-content lifecycle.
+
+Do not recreate `Active/`, `Completed/`, Draft, Review, or other lifecycle directory trees unless a future concrete requirement passes the Feature Admission Gate.
+
+### Human-Cost Boundary
+
+Human attention is reserved for business judgment, unresolved authority, material ambiguity, or risk that cannot be resolved deterministically from the current instruction and sources.
+
+Humans should not be required to:
+
+- choose deterministic Router destinations;
+- synchronize routine status metadata;
+- move files because lifecycle state changed;
+- repeat an approval already given in the current instruction;
+- clean an Inbox item after the missing classification has been supplied;
+- perform deterministic follow-up maintenance after an already-approved scoped task.
+
+A one-time Agent-executed migration is preferable to a permanent human-maintained lifecycle process when the migration is bounded, reversible, and lower risk than continued operational housekeeping.
 
 ## Feature Admission Gate
 
@@ -118,12 +163,12 @@ Deterministic code
   -> write mechanics
 
 Human authority
-  -> approval of material canonical changes
+  -> material judgment that is not already resolved or authorized
 ```
 
 Do not move deterministic integrity responsibilities into prompts merely because an LLM can usually follow the instruction.
 
-A future knowledge compiler should normally produce a candidate update or proposed diff. It must not silently rewrite canonical knowledge merely because the compiler believes the new material is better or newer.
+A knowledge compiler should normally produce a candidate update or proposed diff when material authority remains unresolved. It must not silently invent authority merely because the compiler believes new material is better or newer. Conversely, do not ask for duplicate human approval when the current user instruction already explicitly authorizes the exact change or resolves the exact conflict.
 
 ### Evidence-Preserving Compilation
 
@@ -327,7 +372,7 @@ The following remain `Not now` until a concrete ARMOR problem demonstrates that 
 
 - semantic duplicate detection using embeddings;
 - natural-language fact conflict detection;
-- automatic canonical rewriting or merging;
+- automatic canonical rewriting or merging without sufficient authority;
 - automatic authority promotion/demotion;
 - vector database or semantic-search service;
 - knowledge graph / GraphRAG;
@@ -337,6 +382,26 @@ The following remain `Not now` until a concrete ARMOR problem demonstrates that 
 - MCP server solely for knowledge-quality tooling.
 
 These capabilities may be revisited individually through the Feature Admission Gate. They are not bundled into a future version by default.
+
+## Lifecycle-Neutral Migration Capability
+
+The routing change from `02-Projects/Active/` to `02-Projects/Projects/` is a bounded one-time filesystem migration. It is implemented by:
+
+```text
+scripts/migrate-lifecycle-neutral.py
+```
+
+Safety rules:
+
+- dry-run is the default;
+- `--apply` is required to mutate the Vault;
+- existing destination collisions fail before any project is moved;
+- when source and destination both exist without collisions, project entries are merged deterministically;
+- `03-Records/Published/` is explicitly preserved and never bulk-migrated by this tool.
+
+Published content is preserved because the older routing rule mixed true publication evidence with content merely created for publication. Bulk relocation could therefore rewrite historical meaning. New routing is corrected going forward instead of guessing the semantics of legacy records.
+
+Once the live Vault has been migrated and the tool is no longer operationally required, remove this migration-only script and its focused test from the active tree in accordance with repository hygiene rules.
 
 ## Required Deliverables
 
@@ -349,8 +414,10 @@ This implementation includes:
 - `00-System/ROUTING-TESTS.md`
 - `scripts/armor-route.py`
 - `scripts/armor-knowledge.py`
+- `scripts/migrate-lifecycle-neutral.py` while the one-time live migration remains operational
 - `tests/test_armor_route.py`
 - `tests/test_armor_knowledge.py`
+- `tests/test_lifecycle_neutral_migration.py` while the migration remains operational
 
 ## Router Interface
 
@@ -392,15 +459,21 @@ Rejected inputs:
 ## Deterministic Examples
 
 - `work-product + website + article + project`
-  `-> 03-Records/Published/Articles/`
+  `-> 02-Projects/Workspaces/Website/Articles/`
 - `work-product + website + article`
-  `-> 03-Records/Published/Articles/`
+  `-> 02-Projects/Workspaces/Website/Articles/`
 - `work-product + marketing + social-copy + project`
-  `-> 03-Records/Published/Social-Media/`
+  `-> 02-Projects/Workspaces/Marketing/Social-Media/`
 - `work-product + marketing + social-copy`
-  `-> 03-Records/Published/Social-Media/`
+  `-> 02-Projects/Workspaces/Marketing/Social-Media/`
+- `work-product + content + case-study + project`
+  `-> 02-Projects/Projects/<project>/Content/Case-Studies/`
 - `work-product + products + product-manual + entity`
   `-> 02-Projects/Workspaces/Products/<entity>/Documentation/`
+- `work-product + products + product-manual + entity + project`
+  `-> 02-Projects/Projects/<project>/Products/<entity>/Documentation/`
+- `record + published`
+  `-> 03-Records/Published/`
 - `record + journal + year`
   `-> 03-Records/Journal/<year>/`
 - `knowledge + product`
