@@ -23,10 +23,11 @@ Do not invent a numeric successor name for this architecture unless an explicit 
 
 - Status: Production / Stable
 - Active Vault: `/Users/licat/armor-vault`
-- The current repository tree contains active Minimal Stable material only.
+- Lifecycle-neutral routing is the current architecture.
+- The one-time live Vault migration has been completed.
+- Migration-only tooling is intentionally removed from the active tree after successful migration.
 - Superseded architecture material is intentionally excluded from the working tree; Git history is the historical record.
 - Knowledge-quality focused validation on 2026-09-05: `12 passed`
-- Lifecycle-neutral routing is now the current architecture; the one-time live Vault path migration remains operational until executed locally.
 
 ## Architecture Flow
 
@@ -121,37 +122,7 @@ Website articles and official social copy each have one stable editable-source l
 
 `03-Records/Published/` is an evidence layer. Do not route a newly written article or social post there merely because it is intended to be published.
 
-## One-Time Live Vault Migration
-
-The old named-project root was:
-
-```text
-02-Projects/Active/
-```
-
-The current root is:
-
-```text
-02-Projects/Projects/
-```
-
-The temporary migration helper is:
-
-```bash
-python3 minimal-stable/scripts/migrate-lifecycle-neutral.py --vault /Users/licat/armor-vault
-```
-
-That command is dry-run only. Apply only after reviewing the plan:
-
-```bash
-python3 minimal-stable/scripts/migrate-lifecycle-neutral.py \
-  --vault /Users/licat/armor-vault \
-  --apply
-```
-
-The helper fails before moving projects when destination name collisions exist. It does not bulk-migrate `03-Records/Published/` because legacy routing mixed true publication evidence with content merely created for publication; guessing would risk rewriting historical meaning.
-
-After the live Vault migration is completed and verified, remove this temporary migration helper and its focused test from the active tree.
+Legacy `03-Records/Published/` content is preserved because older routing mixed true publication evidence with content merely created for publication. The migration corrected future routing without guessing historical semantics.
 
 ## Routing
 
@@ -233,13 +204,11 @@ Current test areas are:
 - deterministic routing
 - Agent integration
 - read-only knowledge quality
-- temporary lifecycle-neutral migration safety
 
-Focused suites:
+Focused knowledge-quality suite:
 
 ```bash
 python3 -m pytest minimal-stable/tests/test_armor_knowledge.py -q
-python3 -m pytest minimal-stable/tests/test_lifecycle_neutral_migration.py -q
 ```
 
 Knowledge-quality validation recorded earlier on 2026-09-05: `12 passed`.
@@ -259,7 +228,6 @@ Do not record a new full-suite baseline until the complete current suite has act
 - Let the Agent perform deterministic routing, already-authorized metadata updates, scoped conflict closure, and resolved-Inbox re-routing.
 - Run knowledge-quality checks only when explicitly requested.
 - Run relevant tests after architectural changes.
-- Check for collisions before broad filesystem migrations.
 
 ### Do Not
 
@@ -271,7 +239,7 @@ Do not record a new full-suite baseline until the complete current suite has act
 - Do not silently overwrite existing Vault files without sufficient authority.
 - Do not treat diagnostic warnings as permission to modify canonical knowledge.
 - Do not mix personal machine maintenance into ARMOR business memory.
-- Do not rename the shared Skill away from `armor-memory` until a separate naming decision is explicitly made.
+- Do not rename the shared Skill away from `armor-memory` unless a separate naming decision is explicitly made.
 - Do not keep obsolete architecture copies in the current tree merely for reference; use Git history when historical material is explicitly needed.
 
 ## Repository Layout
@@ -290,10 +258,10 @@ CHANGELOG.md
 ```
 
 `minimal-stable/scripts/`
-Router, read-only knowledge-quality tooling, and temporary bounded migration tooling while an active migration is still pending.
+Router and read-only knowledge-quality tooling.
 
 `minimal-stable/tests/`
-Automated verification for routing, Agent integration, knowledge-quality behavior, and active migration safety.
+Automated verification for routing, Agent integration, and knowledge-quality behavior.
 
 ## History Policy
 
